@@ -39,20 +39,19 @@
 
 int main ()
 {
-  // constructors used in the same order as described above:
-   // ft::Vector<int> first;                                // empty vector of ints
-    ft::vector<int> second (4,100);                    // four ints with value 100
-    ft::vector<int> third (second.begin(),second.end());  // iterating through second
-    //ft::vector<int> fourth (third);                       // a copy of third
+  std::vector<int> first(4,100);
+  std::vector<int> second;
+  std::vector<int> third;
+  std::cout << "Size of first: " << int (first.capacity()) << '\n';
+  first.assign (10,100);             // 7 ints with a value of 100
 
-//   // the iterator constructor can also be used to construct from arrays:
-//   int myints[] = {16,2,77,29};
-//   ft::Vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) ) 
+   second.assign (first.begin(),first.end()-1); // the 5 central values of first
 
-  // std::cout << "The contents of second are:";
-  for (ft::vector<int>::iterator it = third.begin(); it != third.end(); ++it)
-    std::cout << ' ' << *it;
-  std::cout << '\n';
+  int myints[] = {1776,7,4};
+  third.assign (myints,myints+3);   // assigning from array.
 
+  std::cout << "Size of first: " << int (first.capacity()) << '\n';
+  std::cout << "Size of second: " << int (second.capacity()) << '\n';
+  std::cout << "Size of third: "<< int (third.capacity()) << std::endl;
   return 0;
 }
