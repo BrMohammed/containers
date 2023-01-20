@@ -4,83 +4,92 @@
 
 namespace ft 
 {
-    template <class T, class Distance = ptrdiff_t,class Pointer = T*, class Reference = T&>
-    class Iterator
+    template <class T>
+    class iterator
     {
         
         public:
             typedef T         value_type;
-            typedef Distance  difference_type;
-            typedef Pointer   pointer;
-            typedef Reference reference;
-            // typedef std:::random_access_iterator_tag Category;
+            typedef ptrdiff_t  difference_type;
+            typedef T*   pointer;
+            typedef  T& reference;
+            typedef typename std::random_access_iterator_tag Category;
         private:
             pointer m_ptr ;
         public:
-            Iterator(pointer ptr) : m_ptr(ptr){}
-            Iterator(Iterator const &other){*this = other;}
-            Iterator() : m_ptr(NULL) {}
-            ~Iterator(){}
+            iterator(pointer ptr) : m_ptr(ptr){}
+            iterator(iterator const &other){*this = other;}
+            iterator() : m_ptr(NULL) {}
+            ~iterator(){}
 
-            Iterator & operator = (Iterator const & rhs)
+            iterator & operator = (iterator const & rhs)
             {
                 if (this != &rhs)
                     this->m_ptr = rhs.m_ptr;
                 return *this;
             }
-            Iterator& operator++()//++a
+            iterator& operator++()//++a
             {
                 m_ptr++;
                 return *this;
             }
-            Iterator operator ++ (int)//a++
+            iterator operator ++ (int)//a++
             {
-                Iterator tmp  = *this;
-                tmp.m_ptr = *this;
+                iterator tmp  = *this;
+                tmp.m_ptr = this->m_ptr;
                 ++(*this);
                 return tmp;
             }
-            Iterator operator -- (int)//a--
+            iterator operator -- (int)//a--
             {
-                Iterator tmp  = *this;
-                tmp.m_ptr = *this;
+                iterator tmp  = *this;
+                tmp.m_ptr = this->m_ptr;
                 --(*this);
                 return tmp;
             }
-            Iterator& operator -- ()//--a
+            iterator& operator -- ()//--a
             {
                 m_ptr--;
                 return *this;
             }
-            reference operator*(){return *m_ptr;}
-            reference operator [] (int i){return *(m_ptr + index);}
+            reference operator*() const {return *m_ptr;}
+            reference operator [] (int i){return *(m_ptr + i);}
             pointer operator -> (){return m_ptr;}
-            Iterator operator + (difference_type const & rhs) const
+            iterator& operator+=(difference_type rhs) {m_ptr += rhs; return *this;}
+            iterator& operator-=(difference_type rhs) {m_ptr -= rhs; return *this;}
+            iterator operator + (difference_type const & rhs) const
             {
-                Iterator tmp  = *this;
-                tmp.m_ptr = ((*this).m_ptr + rhs.m_ptr);
-                return tmp;
+               iterator it = *this;
+                it.m_ptr += rhs;
+                return it;
             }
-            Iterator operator - (difference_type const & rhs) const
+            iterator operator - (difference_type const & rhs) const
             {
-                Iterator tmp  = *this;
-                tmp.m_ptr = ((*this).m_ptr - rhs.m_ptr);
-                return tmp;
+                iterator it = *this;
+                it.m_ptr -= rhs;
+                return it;
             }
 
-            Iterator& operator+=(difference_type rhs) {m_ptr += rhs; return *this;}
-            Iterator& operator-=(difference_type rhs) {m_ptr -= rhs; return *this;}
+            difference_type operator - (const iterator& other) const 
+            {
+                difference_type n = m_ptr - other.m_ptr;
+                return n;
+            }
 
-            bool operator > (Iterator const & rhs) const{return ((*this).m_ptr > rhs.m_ptr);}
-            bool operator < (Iterator const & rhs)  const{return ((*this).m_ptr < rhs.m_ptr);}
-            bool operator >= (Iterator const & rhs) const{return ((*this).m_ptr >= rhs.m_ptr);}
-            bool operator <= (Iterator const & rhs) const{return ((*this).m_ptr <= rhs.m_ptr);}
-            bool operator == (Iterator const & rhs) const{return ((*this).m_ptr == rhs.m_ptr);}
-            bool operator != (Iterator const & rhs) const{return !((*this).m_ptr == rhs.m_ptr);}
-
-        
+            difference_type operator + (const iterator& other) const 
+            {
+                difference_type n = m_ptr + other.m_ptr;
+                return n;
+            }
+            bool operator > (iterator const & rhs) const{return ((*this).m_ptr > rhs.m_ptr);}
+            bool operator < (iterator const & rhs)  const{return ((*this).m_ptr < rhs.m_ptr);}
+            bool operator >= (iterator const & rhs) const{return ((*this).m_ptr >= rhs.m_ptr);}
+            bool operator <= (iterator const & rhs) const{return ((*this).m_ptr <= rhs.m_ptr);}
+            bool operator == (iterator const & rhs) const{return ((*this).m_ptr == rhs.m_ptr);}
+            bool operator != (iterator const & rhs) const{return !((*this).m_ptr == rhs.m_ptr);}
 
     };
+
 
 }
 
