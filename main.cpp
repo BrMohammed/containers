@@ -40,10 +40,17 @@
 int main ()
 {
   ft::vector<int> first(4,100);
-  first.resize(10);
+    std::cout << "Size of first: " << int (first.size()) << '\n';
+  std::cout << "capacity of first: " << int (first.capacity()) << '\n';
+  first.reserve(5);
+  first.reserve(5);
   // std::vector<int> second;
   // std::vector<int> third;
   std::cout << "Size of first: " << int (first.size()) << '\n';
+  std::cout << "capacity of first: " << int (first.capacity()) << '\n';
+  // first.reserve(10);
+  //  std::cout << "Size of first: " << int (first.size()) << '\n';
+  // std::cout << "capacity of first: " << int (first.capacity()) << '\n';
   for (ft::vector<int>::iterator it = first.begin(); it != first.end(); ++it)
     std::cout << ' ' << *it << std::endl;
   // first.assign (10,100);             // 7 ints with a value of 100
