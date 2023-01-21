@@ -1,8 +1,8 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 #include <iostream>
-#include "iterator.hpp"
 #include "is_integral.hpp"
+#include "iterator.hpp"
 
 namespace ft
 {
@@ -81,8 +81,8 @@ namespace ft
                 m_size = last - first;
                 m_capacity = m_size;
                 m_data  = m_alloc.allocate(m_size);
-                for (;first != last; ++first)
-                    m_alloc.construct(m_data + ((last - (first + 1))), *first);
+                for (int i = 0;first != last; ++first)
+                    m_alloc.construct((m_data + ++i), *first);
             }
             allocator_type get_allocator() const{return m_alloc;}
 
@@ -106,10 +106,59 @@ namespace ft
 
 
             size_type size() const{ return m_size; }
-            size_type capacity() const{ return m_capacity; }//!
-            // size_type max_size() const;
-            // void resize(size_type sz, T c = T());
-            // bool empty() const;
+            size_type capacity() const{ return m_capacity; }
+            size_type max_size() const{return ((2^64)/sizeof(value_type) - 1);}
+            void resize (size_type n, value_type val = value_type())
+            {
+                if(n < m_size)
+                {
+                    for(int i = n ; i < m_size ; i++)
+                        m_alloc.destroy(m_data + i);
+                }
+                else if(n != m_size)
+                {
+                    allocator_type t_alloc;
+                    pointer t_data;
+                    t_data = t_alloc.allocate(n);
+                    iterator end = iterator(m_data + m_size);
+                    iterator begin = iterator(m_data);
+                    for (int i = 0;begin != end; ++begin)
+                    {
+                        t_alloc.construct((m_data + ++i), *begin);
+                    }
+
+                    for(int i = m_size ; i < n ; i++)
+                    {
+                        if(val != 0)
+                            t_alloc.construct(t_data + i, val);
+                        else
+                           t_alloc.construct(t_data + i, 0);
+                    }
+                    for(int i = 0 ; i < m_size ; ++i)
+                        m_alloc.destroy(m_data + i);
+                    m_alloc.deallocate(m_data,m_size);
+                    m_data = NULL;
+                    m_data = m_alloc.allocate(n);
+                    end = NULL;
+                    begin = NULL;
+                    end = iterator(t_data + n);
+                    begin = iterator(t_data);
+                    for (int i = 0;begin != end; ++end)
+                        m_alloc.construct((m_data + ++i), *begin);
+                    for(int i = 0 ; i < n ; ++i)
+                        t_alloc.destroy(t_data + i);
+                    t_alloc.deallocate(t_data,n);
+                    t_data = NULL;
+                }
+                m_size = n;
+                m_capacity = n;
+            }
+            bool empty() const
+            {
+                if(m_size = 0)
+                    return true;
+                return false;
+            }
             // void reserve(size_type n);
 
             void destroy_allocator()
@@ -121,7 +170,6 @@ namespace ft
                 m_size = 0;
                 m_capacity = 0;
             }
-
     };
 
 }

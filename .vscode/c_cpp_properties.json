@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/include/c++/9/ext/pb_ds/detail/unordered_iterator"
+            ],
+            "defines": [],
+            "compilerPath": "/bin/g++",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++98",
+            "intelliSenseMode": "${default}",
+            "configurationProvider": "ms-vscode.cpptools"
+        }
+    ],
+    "version": 4
+}

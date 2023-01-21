@@ -7,30 +7,29 @@ namespace ft
 {
     template <class Iterator>
     class reverse_iterator :  public
-            iterator<typename iterator_traits<Iterator>::category,
             typename iterator_traits<Iterator>::value_type,
             typename iterator_traits<Iterator>::difference_type,
             typename iterator_traits<Iterator>::pointer,
             typename iterator_traits<Iterator>::reference>
     {
         protected:
-            Iterator current;
+            Iterator m_iter;
         public:
             typedef Iterator iterator_type;
             typedef typename iterator_traits<Iterator>::difference_type difference_type;
             typedef typename iterator_traits<Iterator>::reference reference;
             typedef typename iterator_traits<Iterator>::pointer pointer;
         
-        reverse_iterator();
-        explicit reverse_iterator(Iterator x);
-        template <class T> 
-        reverse_iterator(const reverse_iterator<T>& u);
-        ~reverse_iterator();
+        reverse_iterator() : m_iter(NULL){}
+        explicit reverse_iterator(Iterator x) : m_iter(x){}
+        // template <class T> 
+        // reverse_iterator(const reverse_iterator<T>& u);
+        // ~reverse_iterator();
 
-        // Iterator base() const; // explicit
+        iterator_type base() const : {return m_iter} // explicit
         // reference operator*() const;
         // pointer operator->() const;
-        // reverse_iterator& operator++();
+        // reverse_iterator& operator++();reverse_iterator
         // reverse_iterator operator++(int);
         // reverse_iterator& operator--();
         // reverse_iterator operator--(int);

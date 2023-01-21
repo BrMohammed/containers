@@ -4,15 +4,15 @@
 
 namespace ft 
 {
-    template <class Category,class T,class Distance = ptrdiff_t,class Pointer = T*,class Reference = T&>
+    template <class T>
     class iterator
     {
         
         public:
             typedef T         value_type;
-            typedef Distance  difference_type;
-            typedef Pointer   pointer;
-            typedef  Reference reference;
+            typedef std::ptrdiff_t  difference_type;
+            typedef T*   pointer;
+            typedef   T& reference;
             typedef typename std::random_access_iterator_tag category;
         private:
             pointer m_ptr ;

@@ -39,19 +39,22 @@
 
 int main ()
 {
-  std::vector<int> first(4,100);
-  std::vector<int> second;
-  std::vector<int> third;
-  std::cout << "Size of first: " << int (first.capacity()) << '\n';
-  first.assign (10,100);             // 7 ints with a value of 100
+  ft::vector<int> first(4,100);
+  first.resize(10);
+  // std::vector<int> second;
+  // std::vector<int> third;
+  std::cout << "Size of first: " << int (first.size()) << '\n';
+  for (ft::vector<int>::iterator it = first.begin(); it != first.end(); ++it)
+    std::cout << ' ' << *it << std::endl;
+  // first.assign (10,100);             // 7 ints with a value of 100
 
-   second.assign (first.begin(),first.end()-1); // the 5 central values of first
+  //  second.assign (first.begin(),first.end()-1); // the 5 central values of first
 
-  int myints[] = {1776,7,4};
-  third.assign (myints,myints+3);   // assigning from array.
+  // int myints[] = {1776,7,4};
+  // third.assign (myints,myints+3);   // assigning from array.
 
-  std::cout << "Size of first: " << int (first.capacity()) << '\n';
-  std::cout << "Size of second: " << int (second.capacity()) << '\n';
-  std::cout << "Size of third: "<< int (third.capacity()) << std::endl;
+  // std::cout << "Size of first: " << int (first.capacity()) << '\n';
+  // std::cout << "Size of second: " << int (second.capacity()) << '\n';
+  // std::cout << "Size of third: "<< int (third.capacity()) << std::endl;
   return 0;
 }
