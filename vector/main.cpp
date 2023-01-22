@@ -43,13 +43,14 @@ int main ()
 {
   int myints[] = {1776,7,2,4}; 
   ft::vector<int> first;
-  first.assign (myints,myints+4); 
-  std::cout << "Size of first: " << int (first.size()) << '\n';
-  std::cout << "capacity of first: " << int (first.capacity()) << '\n';
-  first.insert(first.begin()  , first.begin() ,first.end());
-  std::cout << "Size of first: " << int (first.size()) << '\n';
-  std::cout << "capacity of first: " << int (first.capacity()) << '\n';
-  for (ft::vector<int>::iterator it = first.begin(); it != first.end(); ++it)
+  ft::vector<int> therd;
+  first.assign (myints,myints+4);
+  std::cout << "Size of first: " << int (therd.size()) << '\n';
+  std::cout << "capacity of first: " << int (therd.capacity()) << '\n';
+  first.swap (therd); 
+  std::cout << "Size of first: " << int (therd.size()) << '\n';
+  std::cout << "capacity of first: " << int (therd.capacity()) << '\n';
+  for (ft::vector<int>::iterator it = therd.begin(); it != therd.end(); ++it)
     std::cout << ' ' << *it << std::endl;
   return 0;
 }

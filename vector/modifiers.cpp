@@ -105,6 +105,30 @@ namespace ft
         m_size = (first - m_data ) + (iterator(m_data + m_size)- (last));
         return m_data + (first - iterator(m_data));
     }
-    // void swap(vector<T,Allocator>&);
-    // void clear();
+
+    template<class T,class Alloc >
+    void vector<T, Alloc>::swap (vector& x)
+    {
+        if(this != &x)
+        {
+            pointer t_data = m_data;
+            m_data = x.m_data;
+            x.m_data = t_data;
+            size_t t_size = m_size;
+            m_size = x.m_size;
+            x.m_size = t_size;
+            t_size = m_capacity;
+            m_capacity = x.m_capacity;
+            x.m_capacity = t_size;
+        }
+
+    }
+
+    template<class T,class Alloc >
+    void vector<T, Alloc>::clear()
+    {
+        for(int i = 0 ; i < m_size ; ++i)
+            m_alloc.destroy(m_data + i);
+        m_size = 0;
+    }
 }
