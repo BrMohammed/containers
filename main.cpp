@@ -39,15 +39,15 @@
 
 int main ()
 {
-  int myints[] = {1776,7,4,5,6}; 
-  std::vector<int> first;
-  first.assign (myints,myints+5); 
-    std::cout << "Size of first: " << int (first.size()) << '\n';
-  std::cout << "capacity of first: " << int (first.capacity()) << '\n';
-  first.erase(first.begin()+3 , first.begin()+ 5);
+  int myints[] = {1776,7,2,4}; 
+  ft::vector<int> first;
+  first.assign (myints,myints+4); 
   std::cout << "Size of first: " << int (first.size()) << '\n';
   std::cout << "capacity of first: " << int (first.capacity()) << '\n';
-  for (std::vector<int>::iterator it = first.begin(); it != first.end(); ++it)
+  first.insert(first.begin()  , first.begin() ,first.end());
+  std::cout << "Size of first: " << int (first.size()) << '\n';
+  std::cout << "capacity of first: " << int (first.capacity()) << '\n';
+  for (ft::vector<int>::iterator it = first.begin(); it != first.end(); ++it)
     std::cout << ' ' << *it << std::endl;
   return 0;
 }
