@@ -220,7 +220,6 @@ namespace ft
                 if(m_size == m_capacity)
                     m_capacity = m_size * 2;
                 return m_data + index;
-
             }
             void insert (iterator position, size_type n, const value_type& val)
             {
