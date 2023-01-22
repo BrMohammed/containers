@@ -1,0 +1,17 @@
+1 - In the resize function, when shrinking the vector, it would be more efficient 
+    to use the erase function instead of manually destroying elements.
+
+2 - In both the resize and reserve functions, instead of using a temporary 
+    allocator and data pointer, you can use move semantics to move the elements 
+    from the old data pointer to the new one. This would avoid the 
+    need to copy and re-construct the elements.
+
+3 - In the reserve function, you can check if the new size is less than 
+    the current capacity before allocating a new buffer.
+
+4 - Also in the reserve function, you can use the std::max function 
+    to ensure that the new capacity is at least as large as the current size.
+
+5 - Finally, you can use std::uninitialized_copy and std::uninitialized_fill
+    to copy/fill the data instead of manually constructing and destroying elements. 
+    This can be more efficient, especially when the type T is non-trivial.
