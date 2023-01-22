@@ -14,6 +14,7 @@ namespace ft
             typedef T*   pointer;
             typedef   T& reference;
             typedef typename std::random_access_iterator_tag category;
+            
         private:
             pointer m_ptr ;
         public:
@@ -57,18 +58,9 @@ namespace ft
             pointer operator -> (){return m_ptr;}
             iterator& operator+=(difference_type rhs) {m_ptr += rhs; return *this;}
             iterator& operator-=(difference_type rhs) {m_ptr -= rhs; return *this;}
-            iterator operator + (difference_type const & rhs) const
-            {
-               iterator it = *this;
-                it.m_ptr += rhs;
-                return it;
-            }
-            iterator operator - (difference_type const & rhs) const
-            {
-                iterator it = *this;
-                it.m_ptr -= rhs;
-                return it;
-            }
+            iterator operator + (difference_type const & rhs) const { return iterator(m_ptr + rhs); }
+          
+            iterator operator - (difference_type const & rhs) const { return iterator(m_ptr - rhs); }
 
             difference_type operator - (const iterator& other) const 
             {

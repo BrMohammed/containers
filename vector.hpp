@@ -3,6 +3,7 @@
 #include <iostream>
 #include "is_integral.hpp"
 #include "iterator.hpp"
+#include <cstring>
 
 namespace ft
 {
@@ -21,7 +22,7 @@ namespace ft
             typedef ptrdiff_t         difference_type;
             typedef Alloc         allocator_type;
             typedef typename ft::iterator<value_type> iterator;
-            typedef typename ft::iterator<const value_type> const_iterator;
+            // typedef typename ft::iterator<const value_type> const_iterator;
             // typedef std::reverse_iterator<iterator> reverse_iterator;
             // typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
         private:
@@ -183,6 +184,44 @@ namespace ft
                     return true;
                 return false;
             }
+
+            // void push_back(const T& x);
+            // void pop_back();
+            // iterator insert(iterator position, const T& x);
+            // void insert(iterator position, size_type n, const T& x);
+            // template <class InputIterator>
+            // void insert(iterator position,
+            // InputIterator first, InputIterator last);
+
+            iterator erase(iterator position)
+            {
+                pointer t_data = m_alloc.allocate(capacity);
+                int index = position - iterator(m_data) ;
+                memcpy(t_data, m_data , (index)* sizeof(value_type));
+                memcpy(t_data + index, m_data + index + 1, (m_size - (index + 1)) * sizeof(value_type));
+                m_alloc.deallocate(m_data, m_capacity);
+                m_data = t_data;
+                m_size--;
+                return m_data + index;
+            }
+
+            iterator erase(iterator first, iterator last)
+            {
+                size_type distence = last - (first );
+                pointer t_data = m_alloc.allocate(capacity);
+                // std::cout << distence <<std::endl;
+                int index = first - iterator(m_data) ;
+                
+                memcpy(t_data, m_data , (index)* sizeof(value_type));
+                int index2 = last - iterator(m_data) ;
+                memcpy(t_data + index , m_data + (index2), (m_size - (index2)) * sizeof(value_type));
+                m_alloc.deallocate(m_data, m_capacity);
+                m_data = t_data;
+                m_size = (first - m_data ) + (iterator(m_data + m_size)- (last));
+                return m_data + (first - iterator(m_data));
+            }
+            // void swap(vector<T,Allocator>&);
+            // void clear();
 
             void destroy_allocator()
             {
