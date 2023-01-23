@@ -11,14 +11,14 @@ namespace ft
     class vector 
     {
         public:
-            typedef typename Alloc::reference reference;
             typedef typename Alloc::const_reference const_reference;
             typedef typename Alloc::pointer pointer;
             typedef typename Alloc::const_pointer const_pointer;
             typedef T                 value_type;
             typedef size_t            size_type;
             typedef ptrdiff_t         difference_type;
-            typedef Alloc         allocator_type;
+            typedef Alloc               allocator_type;
+            typedef T&                  reference;
             typedef typename ft::iterator<value_type> iterator;
             typedef typename ft::iterator<const value_type> const_iterator;
             // typedef std::reverse_iterator<iterator> reverse_iterator;
@@ -44,7 +44,7 @@ namespace ft
             void assign(Inputiterator first, Inputiterator last ,typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type* = 0);
             allocator_type get_allocator() const;
 
-
+            //**********  iterators   *******//
             iterator begin()
             {
                 return m_data;
@@ -71,25 +71,15 @@ namespace ft
             void reserve(size_type n);
             bool empty() const;
 
-            void destroy_allocator()
-            {
-                for(int i = 0 ; i < m_size ; ++i)
-                    m_alloc.destroy(m_data + i);
-                m_alloc.deallocate(m_data,m_size);
-                m_data = NULL;
-                m_size = 0;
-                m_capacity = 0;
-            }
-
             //********** element access ******//
-            // reference operator[](size_type n);
-            // const_reference operator[](size_type n) const;
-            // const_reference at(size_type n) const;
-            // reference at(size_type n);
-            // reference front();
-            // const_reference front() const;
-            // reference back();
-            // const_reference back() const;
+            reference operator[](size_type n);
+            const_reference operator[](size_type n) const;
+            const_reference at(size_type n) const;
+            reference at(size_type n);
+            reference front();
+            const_reference front() const;
+            reference back();
+            const_reference back() const;
 
             //********** modifiers ******//
             void push_back (const value_type& val);
@@ -102,7 +92,28 @@ namespace ft
             iterator erase(iterator first, iterator last);
             void swap(vector& x);
             void clear();
+
+            void destroy_allocator()
+            {
+                for(int i = 0 ; i < m_size ; ++i)
+                    m_alloc.destroy(m_data + i);
+                m_alloc.deallocate(m_data,m_capacity);
+                m_data = NULL;
+                m_size = 0;
+                m_capacity = 0;
+            }
     };
+    template <class T, class Alloc>
+    void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+    {
+        if(&y != &x)
+        {
+            vector<T,Alloc> tmp ;
+            tmp = x;
+            x = y ;
+            y = tmp;
+        }
+    }
 
 }
 

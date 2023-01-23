@@ -121,7 +121,6 @@ namespace ft
             m_capacity = x.m_capacity;
             x.m_capacity = t_size;
         }
-
     }
 
     template<class T,class Alloc >

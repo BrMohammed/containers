@@ -45,11 +45,17 @@ int main ()
   ft::vector<int> first;
   ft::vector<int> therd;
   first.assign (myints,myints+4);
+  first.resize(10);
+  for (ft::vector<int>::iterator it = therd.begin(); it != therd.end(); ++it)
+    std::cout << ' ' << *it << std::endl;
+  ft::swap (therd,first);
+  // // therd = first;
+  // // std::cout << " 2 : " << first.back()<< '\n';
   std::cout << "Size of first: " << int (therd.size()) << '\n';
   std::cout << "capacity of first: " << int (therd.capacity()) << '\n';
-  first.swap (therd); 
-  std::cout << "Size of first: " << int (therd.size()) << '\n';
-  std::cout << "capacity of first: " << int (therd.capacity()) << '\n';
+
+  // std::cout << "Size of first: " << int (first.size()) << '\n';
+  // std::cout << "capacity of first: " << int (first.capacity()) << '\n';
   for (ft::vector<int>::iterator it = therd.begin(); it != therd.end(); ++it)
     std::cout << ' ' << *it << std::endl;
   return 0;

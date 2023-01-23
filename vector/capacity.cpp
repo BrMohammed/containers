@@ -1,4 +1,5 @@
 #include "vector.hpp"
+#include <cstring>
 
 namespace ft
 {

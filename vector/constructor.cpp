@@ -12,9 +12,22 @@ namespace ft
     vector<T, Alloc>& vector<T, Alloc>::operator=(const vector<T,Alloc>& other)
     {
         if (this != &other)
-            vector(other.m_data,other.m_data + other.m_size);
+        {
+            if (m_capacity < other.m_size)
+            {
+                destroy_allocator();
+                m_data  = m_alloc.allocate(other.m_capacity);
+                m_capacity = other.m_capacity;
+            }
+            m_size = other.m_size;
+            iterator it = iterator(other.m_data);
+            for (int  i = 0;it != iterator(other.m_data + other.m_size); it++)
+                m_alloc.construct(m_data + (i++), *it);
+
+        }
         return *this;
     }
+
 
     template <class T, class Alloc>
     vector<T, Alloc>::~vector()
@@ -37,10 +50,12 @@ namespace ft
     vector<T, Alloc>::vector(Inputiterator first, Inputiterator last,const Alloc& alloc, typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type*) : m_alloc(alloc)
     {
         m_size = last - first;
+        m_capacity = m_size; 
         m_data  = m_alloc.allocate(m_size);
-        for (int  i = 0;first != last; ++first)
+        for (int  i = 0;first != last; first++)
         {
-            m_alloc.construct(m_data + (i++), *first);
+            m_alloc.construct(m_data + i, *first);
+            i++;
         }
     }
 
