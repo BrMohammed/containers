@@ -5,20 +5,25 @@ namespace ft
     template <class T, class Alloc>
     void vector<T, Alloc>::push_back (const value_type& val)
     {
-        if(m_size == m_capacity)
-        {
-            
-            pointer t_data = m_alloc.allocate(m_size * 2);
-            memcpy(t_data,m_data,m_size * sizeof(value_type));
-            m_alloc.construct(t_data + m_size,val);
+       if(m_size == m_capacity) 
+       {
+            pointer t_data;
+            if(m_capacity == 0) 
+            {
+                t_data = m_alloc.allocate(2);
+                m_capacity = 2;
+            }
+            else 
+            {
+                t_data = m_alloc.allocate(m_size * 2);
+                memcpy(t_data,m_data,m_capacity * sizeof(value_type));
+                m_capacity = m_size * 2;
+            }
             m_alloc.deallocate(m_data, m_capacity);
-            m_capacity = m_size * 2;
             m_data = t_data;
         }
-        else
-            m_alloc.construct(m_data + m_size,val);
+        m_alloc.construct(m_data + m_size,val);
         m_size++;
-    
     }
 
     template <class T, class Alloc>

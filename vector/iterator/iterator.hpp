@@ -9,11 +9,11 @@ namespace ft
     {
         
         public:
+            typedef typename std::random_access_iterator_tag iterator_category;
             typedef T         value_type;
             typedef std::ptrdiff_t  difference_type;
             typedef T*   pointer;
             typedef   T& reference;
-            typedef typename std::random_access_iterator_tag category;
         private:
             pointer m_ptr ;
         public:
@@ -35,16 +35,16 @@ namespace ft
             }
             iterator operator ++ (int)//a++
             {
-                iterator tmp  = *this;
+                iterator tmp;
                 tmp.m_ptr = this->m_ptr;
-                ++(*this);
+                m_ptr++;
                 return tmp;
             }
             iterator operator -- (int)//a--
             {
-                iterator tmp  = *this;
+                iterator tmp;
                 tmp.m_ptr = this->m_ptr;
-                --(*this);
+                m_ptr--;
                 return tmp;
             }
             iterator& operator -- ()//--a
@@ -53,19 +53,19 @@ namespace ft
                 return *this;
             }
             reference operator*() const {return *m_ptr;}
-            reference operator [] (int i){return *(m_ptr + i);}
+            reference operator [] (difference_type i){return *(m_ptr + i);}
             pointer operator -> (){return m_ptr;}
             iterator& operator+=(difference_type rhs) {m_ptr += rhs; return *this;}
             iterator& operator-=(difference_type rhs) {m_ptr -= rhs; return *this;}
             iterator operator + (difference_type const & rhs) const
             {
-               iterator it = *this;
+               iterator it;
                 it.m_ptr += rhs;
                 return it;
             }
             iterator operator - (difference_type const & rhs) const
             {
-                iterator it = *this;
+                iterator it;
                 it.m_ptr -= rhs;
                 return it;
             }
@@ -86,7 +86,7 @@ namespace ft
             bool operator >= (iterator const & rhs) const{return ((*this).m_ptr >= rhs.m_ptr);}
             bool operator <= (iterator const & rhs) const{return ((*this).m_ptr <= rhs.m_ptr);}
             bool operator == (iterator const & rhs) const{return ((*this).m_ptr == rhs.m_ptr);}
-            bool operator != (iterator const & rhs) const{return !((*this).m_ptr == rhs.m_ptr);}
+            bool operator != (iterator const & rhs) const{return ((*this).m_ptr != rhs.m_ptr);}
 
     };
 

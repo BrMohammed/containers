@@ -20,8 +20,8 @@ namespace ft
             typedef Alloc               allocator_type;
             typedef T&                  reference;
             typedef typename ft::iterator<value_type> iterator;
-            typedef typename ft::iterator<const value_type> const_iterator;
-            // typedef std::reverse_iterator<iterator> reverse_iterator;
+            // typedef typename ft::iterator<const value_type> const_iterator;
+            typedef std::reverse_iterator<iterator> reverse_iterator;
             // typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
         private:
             pointer m_data;
@@ -45,20 +45,12 @@ namespace ft
             allocator_type get_allocator() const;
 
             //**********  iterators   *******//
-            iterator begin()
-            {
-                return m_data;
-            }
-            iterator end()
-            {
-                return m_data + m_size;
-            }
-            //reverse_iterator rbegin();
-            //reverse_iterator rend();
+            iterator begin(){return m_data;}
+            iterator end(){return m_data + m_size;}
+            reverse_iterator rbegin() { return reverse_iterator(end()); }
+            reverse_iterator rend() { return reverse_iterator(begin()); }
             //const_iterator begin() const;
             //const_iterator end() const;
-            // rbegin() const;
-            // rend() const;
             //const_reverse_iterator rend() const;
             //const_reverse_iterator rbegin() const;
 
