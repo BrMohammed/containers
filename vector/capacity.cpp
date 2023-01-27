@@ -1,6 +1,7 @@
 #include "vector.hpp"
 #include <cstring>
 
+
 namespace ft
 {
         template <class T, class Alloc>
@@ -10,7 +11,12 @@ namespace ft
         typename vector<T, Alloc>::size_type vector<T, Alloc>::capacity() const{ return m_capacity; }
 
         template <class T, class Alloc>
-        typename vector<T, Alloc>::size_type vector<T, Alloc>::max_size() const{return ((2^64)/sizeof(value_type) - 1);}
+        typename vector<T, Alloc>::size_type vector<T, Alloc>::max_size() const
+        {
+            // if (is_same<T,char*>::value)
+            //     return (m_alloc.max_size() / 2);
+            return (m_alloc.max_size());
+        }
 
         template <class T, class Alloc>
         void vector<T, Alloc>::resize ( typename vector<T, Alloc>::size_type n, value_type val)

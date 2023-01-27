@@ -38,32 +38,21 @@
 #include "vector.cpp"
 
 
-
 int main ()
 {
-  
-
-
-    ft::vector<int> myvector;
-  for (int i=0; i<10; i++) myvector.push_back(i);
-
-  typedef ft::vector<int>::iterator iter_type;                                                  // ? 0 1 2 3 4 5 6 7 8 9 ?
-  iter_type from (myvector.begin());                     //   ^
-                                                         //         ------>
-  iter_type until (myvector.end());                      //                       ^
-                                                         //
-  
-
+  ft::vector<std::string> myvector;
 
   
-  ft::vector<int>::reverse_iterator rev_until (from);     // ^
-                                                         //         <------
-    ft::vector<int>::reverse_iterator rev_from (until);     //                     ^
+  // set some content in the vector:
+  for (int i=0; i<3; i++)
+  {
+            myvector.push_back("1");
+            ft::vector<std::string>::iterator it = myvector.begin();
+            std::cout << *it << std::endl;
 
-  std::cout << "myvector:";
-  while (rev_from != rev_until)
-    std::cout << ' ' << *rev_from++;
-  std::cout << '\n';
-
+  }
+  std::cout << "size: " << myvector.size() << "\n";
+  std::cout << "capacity: " << myvector.capacity() << "\n";
+  std::cout << "max_size: " << myvector.max_size() << "\n";
   return 0;
 }

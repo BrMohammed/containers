@@ -19,7 +19,7 @@ namespace ft
                 memcpy(t_data,m_data,m_capacity * sizeof(value_type));
                 m_capacity = m_size * 2;
             }
-            m_alloc.deallocate(m_data, m_capacity);
+            m_alloc.deallocate(m_data, m_size);
             m_data = t_data;
         }
         m_alloc.construct(m_data + m_size,val);
@@ -67,13 +67,13 @@ namespace ft
 
     template <class T, class Alloc>
     template <class InputIterator>
-    void vector<T, Alloc>::insert(iterator position,InputIterator first, InputIterator last)
+    void vector<T, Alloc>::insert(iterator position,InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type*)
     {
         size_type distence = last - (first );
         pointer t_data = m_alloc.allocate(m_size + distence);
         int index = position - iterator(m_data) ;
-        memcpy(t_data, m_data , (index )* sizeof(value_type));
-        memcpy(t_data + index, &(*first) , distence *  sizeof(value_type));
+        memcpy(t_data, m_data , (index )* sizeof(value_type));       
+        memcpy(t_data + index, &(*first), distence *  sizeof(value_type));
         int index2 = m_size - index  ;
         memcpy(t_data + (index + distence) , m_data + (index), index2 * sizeof(value_type));
         m_alloc.deallocate(m_data, m_capacity);
@@ -81,6 +81,7 @@ namespace ft
         m_size += distence;
         if (m_size > m_capacity)
             m_capacity = m_size;
+
     }
 
     template <class T, class Alloc>

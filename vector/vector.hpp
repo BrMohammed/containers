@@ -20,9 +20,9 @@ namespace ft
             typedef Alloc               allocator_type;
             typedef T&                  reference;
             typedef typename ft::iterator<value_type> iterator;
-            // typedef typename ft::iterator<const value_type> const_iterator;
+            typedef typename ft::iterator<const value_type> const_iterator;
             typedef std::reverse_iterator<iterator> reverse_iterator;
-            // typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+            typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
         private:
             pointer m_data;
             size_t m_size;
@@ -49,10 +49,10 @@ namespace ft
             iterator end(){return m_data + m_size;}
             reverse_iterator rbegin() { return reverse_iterator(end()); }
             reverse_iterator rend() { return reverse_iterator(begin()); }
-            //const_iterator begin() const;
-            //const_iterator end() const;
-            //const_reverse_iterator rend() const;
-            //const_reverse_iterator rbegin() const;
+            const_iterator begin() const{return m_data;};
+            const_iterator end() const{return m_data + m_size;}
+            const_reverse_iterator rend() const{return const_reverse_iterator(end()); }
+            const_reverse_iterator rbegin() const { return const_reverse_iterator(begin()); }
 
 
             //********** capacity *********//
@@ -79,7 +79,7 @@ namespace ft
             iterator insert (iterator position, const value_type& val);
             void insert (iterator position, size_type n, const value_type& val);
             template <class InputIterator>
-            void insert(iterator position,InputIterator first, InputIterator last);
+            void insert(iterator position,InputIterator first, InputIterator last,typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0);
             iterator erase(iterator position);
             iterator erase(iterator first, iterator last);
             void swap(vector& x);

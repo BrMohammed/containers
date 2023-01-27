@@ -7,10 +7,12 @@ namespace ft
 {
     template <class Iterator>
     class reverse_iterator 
-        :  public iterator <typename iterator_traits<Iterator>::value_type,
-                typename iterator_traits<Iterator>::difference_type,
+        :  public iterator <
+                typename iterator_traits<Iterator>::value_type,
                 typename iterator_traits<Iterator>::pointer,
-                typename iterator_traits<Iterator>::reference>
+                typename iterator_traits<Iterator>::reference
+                typename iterator_traits<Iterator>::difference_type,
+                typename iterator_traits<Iterator>::category>
     {
         protected:
             Iterator m_iter;

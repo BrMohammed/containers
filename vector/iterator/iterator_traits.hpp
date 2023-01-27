@@ -11,6 +11,7 @@ namespace ft{
             typedef typename Iterator::pointer pointer;
             typedef typename Iterator::reference reference;
             typedef typename Iterator::difference_type difference_type;
+            typedef std::random_access_iterator_tag category;
     };
 
     template<class T>

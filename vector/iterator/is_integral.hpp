@@ -2,8 +2,21 @@
 #define IS_INTEGRAL_HPP
 #include <iostream>
 #include <stdio.h>
+
 namespace ft 
 {
+
+    template <class T, class U>
+    struct is_same {
+        static const bool value = false;
+    };
+    
+    template <class T>
+    struct is_same<T, T> {
+        static const bool value = true;
+    };
+
+    ////////// enable_if/////////
     template<bool Cond, class T = void> 
     struct enable_if
     {

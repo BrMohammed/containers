@@ -29,12 +29,22 @@ namespace ft
     }
 
 
+    // template <class T, class Alloc>
+    // vector<T, Alloc>::~vector()
+    // {
+    //     for(int i = 0 ; i != m_size ; i++)
+    //         m_alloc.destroy(m_data+i);
+    //     m_alloc.deallocate(m_data,m_capacity);
+
+
+    // }
+
     template <class T, class Alloc>
     vector<T, Alloc>::~vector()
     {
-        for(int i = 0 ; i < m_size ; i++)
-            m_alloc.destroy(m_data+i);
-        m_alloc.deallocate(m_data,m_size);
+        for (typename vector<T, Alloc>::iterator i = m_data; i != m_data + m_size; ++i)
+            m_alloc.destroy(&i);
+        m_alloc.deallocate(m_data, m_capacity);
     }
 
     template <class T, class Alloc>
