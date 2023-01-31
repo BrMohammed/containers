@@ -1,3 +1,6 @@
+#ifndef CONSTRUCTOR_TPP
+#define CONSTRUCTOR_TPP
+
 #include "vector.hpp"
 
 namespace ft
@@ -29,23 +32,23 @@ namespace ft
     }
 
 
-    // template <class T, class Alloc>
-    // vector<T, Alloc>::~vector()
-    // {
-    //     for(int i = 0 ; i != m_size ; i++)
-    //         m_alloc.destroy(m_data+i);
-    //     m_alloc.deallocate(m_data,m_capacity);
-
-
-    // }
-
     template <class T, class Alloc>
     vector<T, Alloc>::~vector()
     {
-        for (typename vector<T, Alloc>::iterator i = m_data; i != m_data + m_size; ++i)
-            m_alloc.destroy(&i);
-        m_alloc.deallocate(m_data, m_capacity);
+        for(int i = 0 ; i != m_size ; i++)
+            m_alloc.destroy(m_data+i);
+        m_alloc.deallocate(m_data,m_capacity);
+
+
     }
+
+    // template <class T, class Alloc>
+    // vector<T, Alloc>::~vector()
+    // {
+    //     for (typename vector<T, Alloc>::iterator i = m_data; i != m_data + m_size; ++i)
+    //         m_alloc.destroy(&i);
+    //     m_alloc.deallocate(m_data, m_capacity);
+    // }
 
     template <class T, class Alloc>
     vector<T, Alloc>::vector(size_type n, const value_type& val,const allocator_type& alloc) : m_alloc(alloc) ,m_size(n),m_capacity(n)
@@ -95,3 +98,5 @@ namespace ft
     template <class T, class Alloc>
     typename vector<T, Alloc>::allocator_type vector<T, Alloc>::get_allocator() const{ return m_alloc; }
 }
+
+#endif

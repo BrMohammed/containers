@@ -1,3 +1,5 @@
+#ifndef MODIFIERS_TPP
+#define MODIFIERS_TPP
 #include "vector.hpp"
 
 namespace ft
@@ -137,3 +139,4 @@ namespace ft
         m_size = 0;
     }
 }
+#endif

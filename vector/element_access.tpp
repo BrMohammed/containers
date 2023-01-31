@@ -1,3 +1,5 @@
+#ifndef ELEMENT_ACCESS_TPP
+#define ELEMENT_ACCESS_TPP
 #include "vector.hpp"
 
 namespace ft
@@ -43,3 +45,4 @@ namespace ft
     typename vector<T, Alloc>::const_reference vector<T, Alloc>::back() const
     {return *(m_data + (m_size - 1));}
 }
+#endif

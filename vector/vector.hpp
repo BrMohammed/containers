@@ -3,10 +3,9 @@
 #include <iostream>
 #include "./iterator/is_integral.hpp"
 #include "./iterator/iterator.hpp"
+#include "./iterator/reverse_iterator.hpp"
 namespace ft
 {
-
-
     template < class T, class Alloc = std::allocator<T> >
     class vector 
     {
@@ -21,8 +20,8 @@ namespace ft
             typedef T&                  reference;
             typedef typename ft::iterator<value_type> iterator;
             typedef typename ft::iterator<const value_type> const_iterator;
-            typedef std::reverse_iterator<iterator> reverse_iterator;
-            typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+            typedef typename ft::reverse_iterator<iterator> reverse_iterator;
+            typedef typename ft::reverse_iterator<const_iterator> const_reverse_iterator;
         private:
             pointer m_data;
             size_t m_size;
@@ -109,6 +108,9 @@ namespace ft
 
 }
 
-
+#include "constructor.tpp"
+#include "capacity.tpp"
+#include "modifiers.tpp"
+#include "element_access.tpp"
 
 #endif

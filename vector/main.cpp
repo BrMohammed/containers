@@ -35,21 +35,17 @@
 //   return 0;
 // }
 
-#include "vector.cpp"
+#include "vector.hpp"
 
 
 int main ()
 {
   ft::vector<std::string> myvector;
-
-  
-  // set some content in the vector:
   for (int i=0; i<3; i++)
   {
-            myvector.push_back("1");
-            ft::vector<std::string>::iterator it = myvector.begin();
-            std::cout << *it << std::endl;
-
+    myvector.push_back("1");
+    ft::vector<std::string>::iterator it = myvector.begin();
+    std::cout << *it << std::endl;
   }
   std::cout << "size: " << myvector.size() << "\n";
   std::cout << "capacity: " << myvector.capacity() << "\n";

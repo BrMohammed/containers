@@ -1,6 +1,8 @@
+#ifndef CAPACITY_TPP
+#define CAPACITY_TPP
+
 #include "vector.hpp"
 #include <cstring>
-
 
 namespace ft
 {
@@ -65,3 +67,5 @@ namespace ft
             return false;
         }
 }
+
+#endif
