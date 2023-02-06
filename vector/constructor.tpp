@@ -6,7 +6,7 @@
 namespace ft
 {
     template <class T, class Alloc>
-    vector<T, Alloc>::vector(const Alloc& alloc) : m_data(NULL) , m_alloc(alloc), m_size(0), m_capacity(0) {}
+    vector<T, Alloc>::vector(const Alloc& alloc) : m_data(NULL) , m_size(0), m_capacity(0),  m_alloc(alloc) {}
 
     template <class T, class Alloc>
     vector<T, Alloc>::vector(const vector<T,Alloc>& other){*this = other;}
@@ -35,27 +35,23 @@ namespace ft
     template <class T, class Alloc>
     vector<T, Alloc>::~vector()
     {
-        for(int i = 0 ; i != m_size ; i++)
-            m_alloc.destroy(m_data+i);
-        m_alloc.deallocate(m_data,m_capacity);
-
-
+        if(m_capacity)
+        {
+            for(size_t i = 0 ; i < m_size ; i++)
+                m_alloc.destroy(m_data+i);
+            m_alloc.deallocate(m_data,m_capacity);
+        }
     }
 
-    // template <class T, class Alloc>
-    // vector<T, Alloc>::~vector()
-    // {
-    //     for (typename vector<T, Alloc>::iterator i = m_data; i != m_data + m_size; ++i)
-    //         m_alloc.destroy(&i);
-    //     m_alloc.deallocate(m_data, m_capacity);
-    // }
-
     template <class T, class Alloc>
-    vector<T, Alloc>::vector(size_type n, const value_type& val,const allocator_type& alloc) : m_alloc(alloc) ,m_size(n),m_capacity(n)
+    vector<T, Alloc>::vector(size_type n, const value_type& val,const allocator_type& alloc) :m_size(n) ,m_capacity(n), m_alloc(alloc) 
     {
-        m_data = m_alloc.allocate(n);
-        for(int i = 0; i < n ; i++)
-        m_alloc.construct(m_data + i , val);
+        if(n > 0)
+        {
+            m_data = m_alloc.allocate(n);
+            for(size_type i = 0; i < n ; i++)
+                m_alloc.construct(m_data + i , val);
+        }
     }
 
     template <class T, class Alloc>
@@ -64,8 +60,8 @@ namespace ft
     {
         m_size = last - first;
         m_capacity = m_size; 
-        m_data  = m_alloc.allocate(m_size);
-        for (int  i = 0;first != last; first++)
+        m_data  = m_alloc.allocate(m_capacity);
+        for (size_t  i = 0;first != last; first++)
         {
             m_alloc.construct(m_data + i, *first);
             i++;
@@ -79,7 +75,7 @@ namespace ft
         m_size = n;
         m_capacity = n;
         m_data = m_alloc.allocate(n);
-        for(int i = 0;  i < n ; i++)
+        for(size_type i = 0;  i < n ; i++)
             m_alloc.construct(m_data + i , val);
     }
 
@@ -90,7 +86,7 @@ namespace ft
         destroy_allocator();
         m_size = last - first;
         m_capacity = m_size;
-        m_data = m_alloc.allocate(m_size);
+        m_data = m_alloc.allocate(m_capacity);
         for (int i = 0;first != last; ++first)
         m_alloc.construct((m_data + (i++)), *first);
     }

@@ -2,19 +2,20 @@
 #define ITERATOR_HPP
 #include <iostream>
 #include "iterator_traits.hpp"
+#include <vector>
 
 namespace ft 
 {
-    template <class T>
+    template <class _Tp>
     class iterator
     {
         
         public:
-            typedef typename iterator_traits<T*>::value_type iterator_type;
-            typedef typename iterator_traits<T*>::pointer pointer;
-            typedef typename iterator_traits<T*>::reference reference;
-            typedef typename iterator_traits<T*>::difference_type difference_type;
-            typedef typename iterator_traits<T*>::category iterator_category;
+            typedef typename std::remove_cv<_Tp>::type value_type;
+            typedef _Tp* pointer;
+            typedef _Tp& reference;
+            typedef std::ptrdiff_t difference_type;
+            typedef std::random_access_iterator_tag iterator_category;
         private:
             pointer m_ptr ;
         public:
@@ -60,15 +61,11 @@ namespace ft
             iterator& operator-=(difference_type rhs) {m_ptr -= rhs; return *this;}
             iterator operator + (difference_type const & rhs) const
             {
-               iterator it;
-                it.m_ptr += rhs;
-                return it;
+                return m_ptr + rhs;
             }
             iterator operator - (difference_type const & rhs) const
             {
-                iterator it;
-                it.m_ptr -= rhs;
-                return it;
+                return (m_ptr - rhs);
             }
 
             difference_type operator - (const iterator& other) const 
@@ -79,8 +76,19 @@ namespace ft
 
             difference_type operator + (const iterator& other) const 
             {
-                difference_type n = m_ptr + other.m_ptr;
-                return n;
+                return m_ptr + other.m_ptr;
+            }
+
+            template <class B>
+            friend iterator operator + (difference_type x, const iterator<B>& other) //?
+            {
+                return other.m_ptr + x;
+            }
+
+            template <class B>
+            friend iterator operator - (difference_type x, const iterator<B>& other) //?
+            {
+                return other.m_ptr - x;
             }
             bool operator > (iterator const & rhs) const{return ((*this).m_ptr > rhs.m_ptr);}
             bool operator < (iterator const & rhs)  const{return ((*this).m_ptr < rhs.m_ptr);}
@@ -88,7 +96,7 @@ namespace ft
             bool operator <= (iterator const & rhs) const{return ((*this).m_ptr <= rhs.m_ptr);}
             bool operator == (iterator const & rhs) const{return ((*this).m_ptr == rhs.m_ptr);}
             bool operator != (iterator const & rhs) const{return ((*this).m_ptr != rhs.m_ptr);}
-
+            operator iterator<const value_type>() {return iterator<const value_type>(m_ptr);}//?
     };
 
 

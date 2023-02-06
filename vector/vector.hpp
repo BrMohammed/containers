@@ -67,7 +67,7 @@ namespace ft
             const_reference operator[](size_type n) const;
             const_reference at(size_type n) const;
             reference at(size_type n);
-            reference front();
+            reference front();//#####
             const_reference front() const;
             reference back();
             const_reference back() const;
@@ -86,7 +86,7 @@ namespace ft
 
             void destroy_allocator()
             {
-                for(int i = 0 ; i < m_size ; ++i)
+                for(size_t i = 0 ; i < m_size ; ++i)
                     m_alloc.destroy(m_data + i);
                 m_alloc.deallocate(m_data,m_capacity);
                 m_data = NULL;

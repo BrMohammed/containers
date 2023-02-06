@@ -12,16 +12,21 @@ namespace ft
             pointer t_data;
             if(m_capacity == 0) 
             {
-                t_data = m_alloc.allocate(2);
-                m_capacity = 2;
+                t_data = m_alloc.allocate(1);
+                m_capacity = 1;
             }
             else 
             {
                 t_data = m_alloc.allocate(m_size * 2);
-                memcpy(t_data,m_data,m_capacity * sizeof(value_type));
+                for(size_t i = 0; i < m_size; i++)
+                {
+                    m_alloc.construct(t_data + i, *(m_data + i));
+                    m_alloc.destroy(m_data + i);
+                }
                 m_capacity = m_size * 2;
             }
-            m_alloc.deallocate(m_data, m_size);
+            if(m_data)
+                m_alloc.deallocate(m_data, m_size);
             m_data = t_data;
         }
         m_alloc.construct(m_data + m_size,val);
@@ -31,8 +36,11 @@ namespace ft
     template <class T, class Alloc>
     void vector<T, Alloc>::pop_back()
     {
-        m_alloc.destroy(m_data + m_size);
-        m_size--;
+        if(m_data && m_size)
+        {
+            m_alloc.destroy(m_data + m_size);
+            m_size--;
+        }
     }
 
     template <class T, class Alloc>
@@ -57,7 +65,7 @@ namespace ft
         pointer t_data = m_alloc.allocate(m_size + n);
         int index = position - iterator(m_data) ;
         memcpy(t_data, m_data , (index )* sizeof(value_type));
-        for(int i = 0 ; i < n ; i++)
+        for(size_type i = 0 ; i < n ; i++)
             memcpy(t_data + index + i , &val , sizeof(value_type));
         memcpy(t_data + index + n, m_data + index, (m_size - (index)) * sizeof(value_type));
         m_alloc.deallocate(m_data, m_capacity);
@@ -89,12 +97,13 @@ namespace ft
     template <class T, class Alloc>
     typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator position)
     {
-        pointer t_data = m_alloc.allocate(m_capacity);
-        int index = position - iterator(m_data) ;
-        memcpy(t_data, m_data , (index)* sizeof(value_type));
-        memcpy(t_data + index, m_data + index + 1, (m_size - (index + 1)) * sizeof(value_type));
-        m_alloc.deallocate(m_data, m_capacity);
-        m_data = t_data;
+        size_t index = position - iterator(m_data);
+        if(m_size != 0)
+        {
+            for (size_t i = index; i < m_size - 1; i++)
+                m_data[i] = m_data[i + 1];
+            m_alloc.destroy(m_data + (m_size - 1));
+        }
         m_size--;
         return m_data + index;
     }
@@ -102,16 +111,17 @@ namespace ft
     template <class T, class Alloc>
     typename vector<T, Alloc>::iterator  vector<T, Alloc>::erase(iterator first, iterator last)
     {
-        size_type distence = last - (first );
-        pointer t_data = m_alloc.allocate(m_capacity);
-        int index = first - iterator(m_data) ;
-        memcpy(t_data, m_data , (index)* sizeof(value_type));
-        int index2 = last - iterator(m_data) ;
-        memcpy(t_data + index , m_data + (index2), (m_size - (index2)) * sizeof(value_type));
-        m_alloc.deallocate(m_data, m_capacity);
-        m_data = t_data;
-        m_size = (first - m_data ) + (iterator(m_data + m_size)- (last));
-        return m_data + (first - iterator(m_data));
+        size_t index = first - iterator(m_data);
+        size_t end = (last - first);
+        if(m_size != 0)
+        {
+            for (size_t i = index; i < m_size ; i++)
+                m_data[i] = m_data[i + end];
+            for(size_t i = m_size - end  ; i < m_size ; i++)
+                m_alloc.destroy(m_data + i);
+        }
+        m_size -= end;
+        return m_data + index;
     }
 
     template<class T,class Alloc >
