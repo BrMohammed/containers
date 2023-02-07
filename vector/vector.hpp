@@ -56,8 +56,8 @@ namespace ft
             }
             const_iterator begin() const{return m_data;};
             const_iterator end() const{return m_data + m_size;}
-            const_reverse_iterator rend() const{return const_reverse_iterator(end()); }
-            const_reverse_iterator rbegin() const { return const_reverse_iterator(begin()); }
+            const_reverse_iterator rend() const{return const_reverse_iterator(begin()); }
+            const_reverse_iterator rbegin() const { return const_reverse_iterator(end()); }
 
 
             //********** capacity *********//
