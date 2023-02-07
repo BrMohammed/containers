@@ -36,11 +36,7 @@ namespace ft
     template <class T, class Alloc>
     void vector<T, Alloc>::pop_back()
     {
-        if(m_data && m_size)
-        {
-            m_alloc.destroy(m_data + m_size);
-            m_size--;
-        }
+        erase(iterator(m_data + (m_size -1)));
     }
 
     template <class T, class Alloc>
@@ -125,7 +121,7 @@ namespace ft
     }
 
     template<class T,class Alloc >
-    void vector<T, Alloc>::swap (vector& x)
+    void vector<T, Alloc>::swap (vector& x)//?
     {
         if(this != &x)
         {
@@ -138,13 +134,17 @@ namespace ft
             t_size = m_capacity;
             m_capacity = x.m_capacity;
             x.m_capacity = t_size;
+            Alloc t_alloc = m_alloc;
+            m_alloc = x.m_alloc;
+            x.m_alloc = t_alloc;
+            
         }
     }
 
     template<class T,class Alloc >
     void vector<T, Alloc>::clear()
     {
-        for(int i = 0 ; i < m_size ; ++i)
+        for(size_t i = 0 ; i < m_size ; ++i)
             m_alloc.destroy(m_data + i);
         m_size = 0;
     }

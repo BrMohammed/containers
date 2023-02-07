@@ -29,7 +29,7 @@ namespace ft
             allocator_type m_alloc;
 
         public :
-        
+
             //******** constructor ******** //
             explicit vector(const Alloc& alloc = Alloc());//default
             vector(const vector<T,Alloc>& other);//copy
@@ -101,17 +101,16 @@ namespace ft
                 m_capacity = 0;
             }
     };
-    template <class T, class Alloc>
-    void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
-    {
-        if(&y != &x)
-        {
-            vector<T,Alloc> tmp ;
-            tmp = x;
-            x = y ;
-            y = tmp;
-        }
-    }
+    // template <class T, class Alloc>
+    // void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+    // {
+    //     if(&y != &x)
+    //     {
+    //         vector<T,Alloc> tmp(x.begin(), x.end());
+
+  
+    //     }  finish resize
+    // }
 
 }
 
