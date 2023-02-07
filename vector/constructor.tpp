@@ -32,15 +32,20 @@ namespace ft
         return *this;
     }
 
-    template <class T, class Alloc>
-    vector<T, Alloc>::vector(size_type n, const value_type& val,const allocator_type& alloc) :m_size(n) ,m_capacity(n), m_alloc(alloc) 
+    template <class T, class Alloc>//size
+    vector<T, Alloc>::vector(size_type n, const value_type& val,const allocator_type& alloc) :m_alloc(alloc) 
     {
+        m_size = 0;
+        m_capacity = 0;
+        m_data = NULL;
         if(n > 0)
         {
             m_data = m_alloc.allocate(n);
             for(size_type i = 0; i < n ; i++)
                 m_alloc.construct(m_data + i , val);
         }
+        m_size = n;
+        m_capacity = n;
     }
 
     template <class T, class Alloc>
@@ -50,7 +55,7 @@ namespace ft
         m_size = 0;
         m_capacity = 0;
         m_data = NULL;
-        if (!is_same<std::input_iterator_tag,typename iterator_traits<Inputiterator>::category >::value)
+        if (!is_same<std::random_access_iterator_tag ,typename std::iterator_traits<Inputiterator>::iterator_category>::value)
         {
             for(;first != last; first++)
                 push_back(*first);
@@ -81,24 +86,38 @@ namespace ft
     template <class T, class Alloc>
     void vector<T, Alloc>::assign(size_type n, const value_type& val)
     {
-        destroy_allocator();
+        if(n > 0)
+        {
+            if(m_capacity > 0)
+                 destroy_allocator();
+            m_data = m_alloc.allocate(n);
+            for(size_type i = 0;  i < n ; i++)
+                m_alloc.construct(m_data + i , val);
+        }
         m_size = n;
         m_capacity = n;
-        m_data = m_alloc.allocate(n);
-        for(size_type i = 0;  i < n ; i++)
-            m_alloc.construct(m_data + i , val);
     }
 
     template <class T, class Alloc>
     template <class Inputiterator>
     void vector<T, Alloc>::assign(Inputiterator first, Inputiterator last ,typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type*)
-    {
-        destroy_allocator();
-        m_size = last - first;
-        m_capacity = m_size;
-        m_data = m_alloc.allocate(m_capacity);
-        for (int i = 0;first != last; ++first)
-        m_alloc.construct((m_data + (i++)), *first);
+    { 
+        if (!is_same<std::random_access_iterator_tag ,typename std::iterator_traits<Inputiterator>::iterator_category>::value)
+        {
+            for(;first != last; first++)
+                push_back(*first);
+        }
+        else
+        {
+            if(m_capacity > 0)
+                destroy_allocator();
+            m_size = std::distance(first,last);
+            m_capacity = m_size;
+            m_data = m_alloc.allocate(m_capacity);
+            for (size_t  i = 0;first != last; first++)
+                m_alloc.construct(m_data + (i++), *first);
+        }
+        
     }
 
     template <class T, class Alloc>
