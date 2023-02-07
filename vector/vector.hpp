@@ -29,6 +29,7 @@ namespace ft
             allocator_type m_alloc;
 
         public :
+        
             //******** constructor ******** //
             explicit vector(const Alloc& alloc = Alloc());//default
             vector(const vector<T,Alloc>& other);//copy
