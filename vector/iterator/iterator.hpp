@@ -12,9 +12,9 @@ namespace ft
         
         public:
             typedef typename std::remove_cv<_Tp>::type value_type;
+            typedef std::ptrdiff_t difference_type;
             typedef _Tp* pointer;
             typedef _Tp& reference;
-            typedef std::ptrdiff_t difference_type;
             typedef std::random_access_iterator_tag iterator_category;
         private:
             pointer m_ptr ;
@@ -98,8 +98,6 @@ namespace ft
             bool operator != (iterator const & rhs) const{return ((*this).m_ptr != rhs.m_ptr);}
             operator iterator<const value_type>() {return iterator<const value_type>(m_ptr);}//?
     };
-
-
 }
 
 

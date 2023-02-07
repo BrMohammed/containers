@@ -46,8 +46,14 @@ namespace ft
             //**********  iterators   *******//
             iterator begin(){return m_data;}
             iterator end(){return m_data + m_size;}
-            reverse_iterator rbegin() { return reverse_iterator(end()); }
-            reverse_iterator rend() { return reverse_iterator(begin()); }
+            reverse_iterator rbegin() 
+            { 
+                return reverse_iterator(end());
+            }
+            reverse_iterator rend()
+            {
+                return reverse_iterator(begin()); 
+            }
             const_iterator begin() const{return m_data;};
             const_iterator end() const{return m_data + m_size;}
             const_reverse_iterator rend() const{return const_reverse_iterator(end()); }

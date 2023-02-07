@@ -39,21 +39,23 @@
 
 int main ()
 {
-  ft::vector<int> myvector;
+  ft::vector<int> myvector(10, 10);
 
+  ft::vector<int>::reverse_iterator it = myvector.rend();
+  std::cout << *it << std::endl;
   // set some values (from 1 to 10)
-  for (int i=1; i<=10; i++) myvector.push_back(i);
+  // for (int i=1; i<=10; i++) myvector.push_back(i);
 
-  // erase the 6th element
-  myvector.erase (myvector.begin()+5);
+  // // erase the 6th element
+  // myvector.erase (myvector.begin()+5);
 
-  // erase the first 3 elements:
-  myvector.erase (myvector.begin()+1,myvector.begin()+2);
+  // // erase the first 3 elements:
+  // myvector.erase (myvector.begin()+1,myvector.begin()+2);
 
-  std::cout << "myvector contains:";
-  for (unsigned i=0; i<myvector.size(); ++i)
-    std::cout << ' ' << myvector[i];
-  std::cout << '\n';
+  // std::cout << "myvector contains:";
+  // for (unsigned i=0; i<myvector.size(); ++i)
+  //   std::cout << ' ' << myvector[i];
+  // std::cout << '\n';
 
-  return 0;
+  // return 0;
 }
