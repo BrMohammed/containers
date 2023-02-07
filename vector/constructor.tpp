@@ -14,11 +14,13 @@ namespace ft
     template <class T, class Alloc>
     vector<T, Alloc>& vector<T, Alloc>::operator=(const vector<T,Alloc>& other)
     {
+        m_size = 0;
+        m_capacity = 0;
+        m_data = NULL;
         if (this != &other)
         {
             if (m_capacity < other.m_size)
             {
-                destroy_allocator();
                 m_data  = m_alloc.allocate(other.m_capacity);
                 m_capacity = other.m_capacity;
             }
@@ -26,21 +28,8 @@ namespace ft
             iterator it = iterator(other.m_data);
             for (int  i = 0;it != iterator(other.m_data + other.m_size); it++)
                 m_alloc.construct(m_data + (i++), *it);
-
         }
         return *this;
-    }
-
-
-    template <class T, class Alloc>
-    vector<T, Alloc>::~vector()
-    {
-        if(m_capacity)
-        {
-            for(size_t i = 0 ; i < m_size ; i++)
-                m_alloc.destroy(m_data+i);
-            m_alloc.deallocate(m_data,m_capacity);
-        }
     }
 
     template <class T, class Alloc>
@@ -58,16 +47,37 @@ namespace ft
     template <class Inputiterator>
     vector<T, Alloc>::vector(Inputiterator first, Inputiterator last,const Alloc& alloc, typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type*) : m_alloc(alloc)
     {
-        m_size = last - first;
-        m_capacity = m_size; 
-        m_data  = m_alloc.allocate(m_capacity);
-        for (size_t  i = 0;first != last; first++)
+        m_size = 0;
+        m_capacity = 0;
+        m_data = NULL;
+        if (!is_same<std::input_iterator_tag,typename iterator_traits<Inputiterator>::category >::value)
         {
-            m_alloc.construct(m_data + i, *first);
-            i++;
+            for(;first != last; first++)
+                push_back(*first);
+        }
+        else
+        {
+            m_size = std::distance(first,last);
+            m_capacity = m_size;
+            m_data  = m_alloc.allocate(m_capacity);
+            for (size_t  i = 0;first != last; first++)
+                m_alloc.construct(m_data + (i++), *first);
         }
     }
 
+    template <class T, class Alloc>
+    vector<T, Alloc>::~vector()
+    {
+        if(m_data) 
+        {
+            for(size_t i = 0 ; i < m_size ; i++)
+                m_alloc.destroy(m_data + i);
+            m_alloc.deallocate(m_data,m_capacity);
+            m_size = 0;
+            m_capacity = 0;
+            m_data = NULL;
+        }
+    }
     template <class T, class Alloc>
     void vector<T, Alloc>::assign(size_type n, const value_type& val)
     {

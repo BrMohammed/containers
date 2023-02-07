@@ -39,26 +39,28 @@
 
 int main () {
   ft::vector<int> myvector;
+         ft::vector<std::string> str("");
+        ft::vector<std::string>::iterator it(str);
   for (int i=0; i<10; i++) myvector.push_back(i);  // myvector: 0 1 2 3 4 5 6 7 8 9
 
-  typedef ft::vector<int>::iterator iter_type;
+  // typedef ft::vector<int>::iterator iter_type;
 
-  // std::reverse_iterator<iter_type> rev_iterator(myvector.rbegin());
+  // // std::reverse_iterator<iter_type> rev_iterator(myvector.rbegin());
 
-  std::reverse(myvector.rbegin(), myvector.rend());
-      // if (myvector.rbegin() !=  myvector.rend())
-      // {
-      //   for (; myvector.rbegin() < --myvector.rend(); ++myvector.rbegin())
-      //   {
-      //       std::cout << "hi" << std::endl;
-      //       std::swap(* myvector.rbegin() , *myvector.rend());
-      //   }
+  // std::reverse(myvector.rbegin(), myvector.rend());
+  //     // if (myvector.rbegin() !=  myvector.rend())
+  //     // {
+  //     //   for (; myvector.rbegin() < --myvector.rend(); ++myvector.rbegin())
+  //     //   {
+  //     //       std::cout << "hi" << std::endl;
+  //     //       std::swap(* myvector.rbegin() , *myvector.rend());
+  //     //   }
             
-      // }
+  //     // }
         
 
-  for ( ft::reverse_iterator<iter_type> rit = myvector.rbegin() ; rit != myvector.rend();rit++)
-    std::cout << *rit << std::endl;
+  // for ( ft::reverse_iterator<iter_type> rit = myvector.rbegin() ; rit != myvector.rend();rit++)
+  //   std::cout << *rit << std::endl;
    
 
   return 0;
