@@ -38,6 +38,8 @@ namespace ft
         m_size = 0;
         m_capacity = 0;
         m_data = NULL;
+        if(n > m_alloc.max_size())
+            throw std::length_error("Length exception");
         if(n > 0)
         {
             m_data = m_alloc.allocate(n);

@@ -2,7 +2,6 @@
 #define ITERATOR_HPP
 #include <iostream>
 #include "iterator_traits.hpp"
-#include <vector>
 
 namespace ft 
 {
@@ -11,7 +10,7 @@ namespace ft
     {
         
         public:
-            typedef typename std::remove_cv<_Tp>::type value_type;
+            typedef              _Tp value_type;
             typedef std::ptrdiff_t difference_type;
             typedef _Tp* pointer;
             typedef _Tp& reference;

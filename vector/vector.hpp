@@ -4,6 +4,7 @@
 #include "./iterator/is_integral.hpp"
 #include "./iterator/iterator.hpp"
 #include "./iterator/reverse_iterator.hpp"
+#include <cstddef>
 namespace ft
 {
     template < class T, class Alloc = std::allocator<T> >
