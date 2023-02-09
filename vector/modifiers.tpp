@@ -42,34 +42,63 @@ namespace ft
     template <class T, class Alloc>
    typename vector<T, Alloc>::iterator vector<T, Alloc>::insert (typename vector<T, Alloc>::iterator position, const value_type& val)
     {
-        pointer t_data = m_alloc.allocate(m_size * 2);
-        int index = position - iterator(m_data) ;
-        memcpy(t_data, m_data , (index )* sizeof(value_type));
-        memcpy(t_data + index , &val , sizeof(value_type));
-        memcpy(t_data + index + 1, m_data + index, (m_size - (index)) * sizeof(value_type));
-        m_alloc.deallocate(m_data, m_capacity);
-        m_data = t_data;
+        size_t index =  position - iterator(m_data);
+        if(m_capacity == m_size) 
+        {
+            if(m_capacity == 0)
+                m_capacity = 1;
+            else
+                m_capacity = m_size * 2;
+            pointer t_data =  m_alloc.allocate(m_capacity);
+            for(size_t i = 0; i < m_size; i++)
+            {
+                m_alloc.construct(t_data + i, *(m_data + i));
+                m_alloc.destroy(m_data + i);
+            }
+            if(m_data)
+                m_alloc.deallocate(m_data, m_size);
+            m_data = t_data;
+        }
+        m_alloc.construct(m_data + (m_size) , val);
+        pointer tmp =  &m_data[index];
+        for(size_t i = index + 1; i <= m_size ; i++)
+        {
+            pointer tmp2 =  &m_data[i];
+            
+            m_data[i] = *tmp;
+            std::cerr  <<  " tmp " << *tmp2  << std::endl;
+            tmp = tmp2;
+            
+            
+        }
+        m_data[index] = val;
+
+        // std::cerr  << "index " << index <<  " val " << val  << std::endl;
+
         m_size++;
-        if(m_size == m_capacity)
-            m_capacity = m_size * 2;
+
+        for(size_t i = 0; i < m_size ; i++)
+            std::cerr  << m_size << i  <<  "  " <<*iterator(m_data + i) << std::endl;
+        std::cerr << "hi" << std::endl;
+
         return m_data + index;
     }
 
-    template <class T, class Alloc>
-    void vector<T, Alloc>::insert (iterator position, size_type n, const value_type& val)
-    {
-        pointer t_data = m_alloc.allocate(m_size + n);
-        int index = position - iterator(m_data) ;
-        memcpy(t_data, m_data , (index )* sizeof(value_type));
-        for(size_type i = 0 ; i < n ; i++)
-            memcpy(t_data + index + i , &val , sizeof(value_type));
-        memcpy(t_data + index + n, m_data + index, (m_size - (index)) * sizeof(value_type));
-        m_alloc.deallocate(m_data, m_capacity);
-        m_data = t_data;
-        m_size += n;
-        if (m_size > m_capacity)
-            m_capacity = m_size;   
-    }
+    // template <class T, class Alloc>
+    // void vector<T, Alloc>::insert (iterator position, size_type n, const value_type& val)
+    // {
+    //     pointer t_data = m_alloc.allocate(m_size + n);
+    //     int index = position - iterator(m_data) ;
+    //     memcpy(t_data, m_data , (index )* sizeof(value_type));
+    //     for(size_type i = 0 ; i < n ; i++)
+    //         memcpy(t_data + index + i , &val , sizeof(value_type));
+    //     memcpy(t_data + index + n, m_data + index, (m_size - (index)) * sizeof(value_type));
+    //     m_alloc.deallocate(m_data, m_capacity);
+    //     m_data = t_data;
+    //     m_size += n;
+    //     if (m_size > m_capacity)
+    //         m_capacity = m_size;   
+    // }
 
     template <class T, class Alloc>
     template <class InputIterator>
