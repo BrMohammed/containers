@@ -110,36 +110,12 @@ namespace ft
     template <class InputIterator>
     void vector<T, Alloc>::insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type *)
     {
-        (void)position;
-        size_t n = std::distance(first, last);
-        if(n > m_alloc.max_size())
-            throw std::length_error("Length exception");
-        if (n != 0 )
+        size_t index = position - iterator(m_data);
+        for(;first != last;first++)
         {
-            size_t t_capacity = m_capacity;
-            if (m_capacity <= m_size + n && n != 0)
-                t_capacity = (m_size + n) * 2;
-            else if (m_capacity == 0)
-                t_capacity = n;
-            else
-                t_capacity = m_capacity;
-            pointer t_data = m_alloc.allocate(t_capacity);  
-            size_t index = position - iterator(m_data);
-            for(size_t i = 0; i < index; i++)
-                m_alloc.construct(t_data + i, *(m_data + i));
-            for(size_t i = 0; i < n; i++)///////////////
-                m_alloc.construct(t_data + (i + index), *(first++));
-            for(size_t i = 0; i + index < m_size; i++)
-                m_alloc.construct(t_data + (i + n  + index), *(m_data + i + index));
-            if(m_data)
-            {
-                for(size_t i = 0 ; i < m_size ; ++i)
-                    m_alloc.destroy(m_data + i);
-                m_alloc.deallocate(m_data,m_capacity);
-            }
-            m_data = t_data;
-            m_size += n; 
-            m_capacity = t_capacity;
+            iterator tmp = m_data + index;
+            insert(tmp,*first);
+            index++;
         }
     }
 
