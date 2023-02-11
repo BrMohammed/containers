@@ -78,7 +78,7 @@ namespace ft
         if(m_data) 
         {
             for(size_t i = 0 ; i < m_size ; i++)
-                m_alloc.destroy(m_data + i);
+                m_alloc.destroy(m_data + i );
             m_alloc.deallocate(m_data,m_capacity);
             m_size = 0;
             m_capacity = 0;

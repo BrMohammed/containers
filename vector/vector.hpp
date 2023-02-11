@@ -5,6 +5,8 @@
 #include "./iterator/iterator.hpp"
 #include "./iterator/reverse_iterator.hpp"
 #include <cstddef>
+#include <memory>
+#include <string>
 namespace ft
 {
     template < class T, class Alloc = std::allocator<T> >
@@ -30,7 +32,7 @@ namespace ft
             allocator_type m_alloc;
 
         public :
-
+        
             //******** constructor ******** //
             explicit vector(const Alloc& alloc = Alloc());//default
             vector(const vector<T,Alloc>& other);//copy
@@ -96,6 +98,7 @@ namespace ft
             {
                 for(size_t i = 0 ; i < m_size ; ++i)
                     m_alloc.destroy(m_data + i);
+                if(m_data)
                 m_alloc.deallocate(m_data,m_capacity);
                 m_data = NULL;
                 m_size = 0;
