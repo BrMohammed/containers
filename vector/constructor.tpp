@@ -14,16 +14,11 @@ namespace ft
     template <class T, class Alloc>
     vector<T, Alloc>& vector<T, Alloc>::operator=(const vector<T,Alloc>& other)
     {
-        m_size = 0;
-        m_capacity = 0;
-        m_data = NULL;
         if (this != &other)
         {
-            if (m_capacity < other.m_size)
-            {
-                m_data  = m_alloc.allocate(other.m_capacity);
-                m_capacity = other.m_capacity;
-            }
+            destroy_allocator();
+            m_data  = m_alloc.allocate(other.m_capacity);
+            m_capacity = other.m_capacity;
             m_size = other.m_size;
             iterator it = iterator(other.m_data);
             for (int  i = 0;it != iterator(other.m_data + other.m_size); it++)
@@ -106,20 +101,31 @@ namespace ft
     { 
         if (!is_same<std::random_access_iterator_tag ,typename std::iterator_traits<Inputiterator>::iterator_category>::value)
         {
+            if(m_data)
+            {
+                for(size_t i = 0 ; i < m_size ; ++i)
+                    m_alloc.destroy(m_data + i);
+                m_alloc.deallocate(m_data,m_capacity);
+            }
             for(;first != last; first++)
                 push_back(*first);
         }
         else
         {
-            if(m_capacity > 0)
-                destroy_allocator();
-            m_size = std::distance(first,last);
-            m_capacity = m_size;
-            m_data = m_alloc.allocate(m_capacity);
+            size_t tmp = std::distance(first,last);
+            pointer t_data = m_alloc.allocate(tmp);
             for (size_t  i = 0;first != last; first++)
-                m_alloc.construct(m_data + (i++), *first);
+                m_alloc.construct(t_data + (i++), *first);
+            if(m_data)
+            {
+                for(size_t i = 0 ; i < m_size ; ++i)
+                    m_alloc.destroy(m_data + i);
+                m_alloc.deallocate(m_data,m_capacity);
+            }
+            m_size = tmp;
+            m_capacity = m_size;
+            m_data = t_data;
         }
-        
     }
 
     template <class T, class Alloc>
