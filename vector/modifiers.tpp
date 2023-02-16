@@ -125,7 +125,7 @@ namespace ft
         size_t index = position - iterator(m_data);
         if (m_size != 0)
         {
-            for (size_t i = index; i < m_size - 1; i++)
+            for (size_t i = index; i < m_size ; i++)
                 m_data[i] = m_data[i + 1];
             m_alloc.destroy(m_data + (m_size - 1));
         }
@@ -138,6 +138,7 @@ namespace ft
     {
         size_t index = first - iterator(m_data);
         size_t end = last - first;
+
         if (m_size != 0)
         {
             for (size_t i = index; i < m_size; i++)
