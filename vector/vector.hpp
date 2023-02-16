@@ -107,16 +107,17 @@ namespace ft
                 m_capacity = 0;
             }
     };
-    // template <class T, class Alloc>
-    // void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
-    // {
-    //     if(&y != &x)
-    //     {
-    //         vector<T,Alloc> tmp(x.begin(), x.end());
-
-  
-    //     }  finish resize
-    // }
+    template <class T, class Alloc>
+    void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+    {
+        if(&y != &x)
+        {
+            vector<T,Alloc> tmp(x.begin(), x.end());
+            x.assign(y.begin(),y.end());
+            y.assign(tmp.begin(),tmp.end());
+            tmp.clear();
+        } 
+    }
 
 }
 

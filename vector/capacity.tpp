@@ -23,7 +23,9 @@ namespace ft
         template <class T, class Alloc>
         void vector<T, Alloc>::resize ( typename vector<T, Alloc>::size_type n, value_type val)
         {
-            if (n < m_size)
+            if(n == 0)
+                clear();
+            else if (n < m_size)
                 erase(begin() + n, end());
             else if (n > m_size)
                 insert(end(), n - m_size, val);

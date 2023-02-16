@@ -136,17 +136,16 @@ namespace ft
     template <class T, class Alloc>
     typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator first, iterator last)
     {
-        size_t index = std::distance(iterator(m_data), first);
-        size_t end = std::distance(first, last);
+        size_t index = first - iterator(m_data);
+        size_t end = last - first;
         if (m_size != 0)
         {
             for (size_t i = index; i < m_size; i++)
-                m_data[i] = m_data[i + end];
+                m_data[i] = m_data[i + (end)];
             for (size_t i = m_size - end; i < m_size; i++)
                 m_alloc.destroy(m_data + i);
             m_size -= end;
         }
-        
         return m_data + index;
     }
 
@@ -155,18 +154,19 @@ namespace ft
     {
         if (this != &x)
         {
-            pointer t_data = m_data;
-            m_data = x.m_data;
-            x.m_data = t_data;
-            size_t t_size = m_size;
-            m_size = x.m_size;
-            x.m_size = t_size;
-            t_size = m_capacity;
-            m_capacity = x.m_capacity;
-            x.m_capacity = t_size;
-            Alloc t_alloc = m_alloc;
-            m_alloc = x.m_alloc;
-            x.m_alloc = t_alloc;
+            // pointer t_data = m_data;
+            // m_data = x.m_data;
+            // x.m_data = t_data;
+            // size_t t_size = m_size;
+            // m_size = x.m_size;
+            // x.m_size = t_size;
+            // t_size = m_capacity;
+            // m_capacity = x.m_capacity;
+            // x.m_capacity = t_size;
+            // Alloc t_alloc = m_alloc;
+            // m_alloc = x.m_alloc;
+            // x.m_alloc = t_alloc;
+            ft::swap(*this,x);
         }
     }
 
