@@ -25,7 +25,7 @@ namespace ft
             ~iterator(){}
 
             iterator geter() const { return m_ptr; }
-
+            
             iterator & operator = (iterator const & rhs)
             {
                 if (this != &rhs)
@@ -80,6 +80,24 @@ namespace ft
             {
                 return m_ptr + other.m_ptr;
             }
+
+            template <class B>
+            friend iterator operator + (difference_type x, const iterator<B>& other) //?
+            {
+                return other.m_ptr + x;
+            }
+
+            template <class B>
+            friend iterator operator - (difference_type x, const iterator<B>& other) //?
+            {
+                return other.m_ptr - x;
+            }
+            bool operator > (iterator const & rhs) const{return ((*this).m_ptr > rhs.m_ptr);}
+            bool operator < (iterator const & rhs)  const{return ((*this).m_ptr < rhs.m_ptr);}
+            bool operator >= (iterator const & rhs) const{return ((*this).m_ptr >= rhs.m_ptr);}
+            bool operator <= (iterator const & rhs) const{return ((*this).m_ptr <= rhs.m_ptr);}
+            bool operator == (iterator const & rhs) const{return ((*this).m_ptr == rhs.m_ptr);}
+            bool operator != (iterator const & rhs) const{return ((*this).m_ptr != rhs.m_ptr);}
             operator iterator<const value_type>() {return iterator<const value_type>(m_ptr);}//?
     };
     template <class B>
