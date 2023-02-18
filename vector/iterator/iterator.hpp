@@ -80,25 +80,14 @@ namespace ft
             {
                 return m_ptr + other.m_ptr;
             }
-            bool operator > (iterator const & rhs) const{return ((*this).m_ptr > rhs.m_ptr);}
-            bool operator < (iterator const & rhs)  const{return ((*this).m_ptr < rhs.m_ptr);}
-            bool operator >= (iterator const & rhs) const{return ((*this).m_ptr >= rhs.m_ptr);}
-            bool operator <= (iterator const & rhs) const{return ((*this).m_ptr <= rhs.m_ptr);}
-            bool operator == (iterator const & rhs) const{return ((*this).m_ptr == rhs.m_ptr);}
-            bool operator != (iterator const & rhs) const{return ((*this).m_ptr != rhs.m_ptr);}
             operator iterator<const value_type>() {return iterator<const value_type>(m_ptr);}//?
     };
-     template <class B>
-     iterator<B> operator + (typename iterator<B>::difference_type x, const iterator<B>& other) //?
-    {
-        return other.geter() + x;
-    }
-
     template <class B>
-     iterator<B> operator - (typename iterator<B>::difference_type x, const iterator<B>& other) //?
-    {
-        return other.geter() - x;
-    }
+    iterator<B> operator + (typename iterator<B>::difference_type x, const iterator<B>& other) //?
+        {return other.geter() + x;}
+    template <class B>
+    iterator<B> operator - (typename iterator<B>::difference_type x, const iterator<B>& other) //?
+        {return other.geter() - x;}
     template <class it1, class it2>
     bool operator < (iterator<it1> const & x, iterator<it2> const & y)
         {return (*x < *y);}   
@@ -111,6 +100,12 @@ namespace ft
     template <class it1, class it2>
     bool operator >=(iterator<it1> const & x, iterator<it2> const & y)
         {return (*x >= *y);}
+    template <class it1, class it2>
+    bool operator == (iterator<it1> const & x, iterator<it2> const & y)
+        {return (*x == *y);}
+    template <class it1, class it2>
+    bool operator !=(iterator<it1> const & x, iterator<it2> const & y)
+        {return (*x != *y);}
 }
 
 

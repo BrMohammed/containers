@@ -74,7 +74,12 @@ namespace ft
         }
                    
        operator reverse_iterator<const iterator_type>() {return reverse_iterator<const iterator_type>(m_iter);}//?
-      
+        bool operator > (reverse_iterator const & rhs) const{return ((*this).m_iter < rhs.m_iter);}
+        bool operator < (reverse_iterator const & rhs)  const{return ((*this).m_iter > rhs.m_iter);}
+        bool operator >= (reverse_iterator const & rhs) const{return ((*this).m_iter <= rhs.m_iter);}
+        bool operator <= (reverse_iterator const & rhs) const{return ((*this).m_iter >= rhs.m_iter);}
+        bool operator == (reverse_iterator const & rhs) const{return ((*this).m_iter == rhs.m_iter);}
+        bool operator != (reverse_iterator const & rhs) const{return ((*this).m_iter != rhs.m_iter);}
     };
     template <class B>
     reverse_iterator<B> operator + (typename reverse_iterator<B>::difference_type x, reverse_iterator<B> const & other)
@@ -88,18 +93,18 @@ namespace ft
         {return (x.base() == y.base());}
     template <class it1, class it2>
     bool operator < ( reverse_iterator< it1> const & x,reverse_iterator< it2> const & y)
-        {return (x.base() > y.base());}
+        {return (x.base() < y.base());}
     template <class it1, class it2>
     bool operator != ( reverse_iterator<it1> const & x, reverse_iterator<it2> const & y)
         {return (x.base() != y.base());}
     template <class it1, class it2>
     bool operator > ( reverse_iterator<it1> const & x, reverse_iterator<it2> const & y)
-        {return (x.base() < y.base());}
+        {return (x.base() > y.base());}
     template <class it1, class it2>
     bool operator >= ( reverse_iterator<it1> const & x, reverse_iterator<it2> const & y)
-        {return (x.base() <= y.base());}
+        {return (x.base() >= y.base());}
     template <class it1, class it2>
     bool operator <=( reverse_iterator<it1> const & x, reverse_iterator<it2> const & y)
-        {return (x.base() >= y.base());}
+        {return (x.base() <= y.base());}
 }
 #endif
