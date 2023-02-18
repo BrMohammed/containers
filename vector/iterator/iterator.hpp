@@ -89,15 +89,69 @@ namespace ft
             {
                 return other.m_ptr - x;
             }
-            bool operator > (iterator const & rhs) const{return ((*this).m_ptr > rhs.m_ptr);}
-            bool operator < (iterator const & rhs)  const{return ((*this).m_ptr < rhs.m_ptr);}
-            bool operator >= (iterator const & rhs) const{return ((*this).m_ptr >= rhs.m_ptr);}
-            bool operator <= (iterator const & rhs) const{return ((*this).m_ptr <= rhs.m_ptr);}
             bool operator == (iterator const & rhs) const{return ((*this).m_ptr == rhs.m_ptr);}
             bool operator != (iterator const & rhs) const{return ((*this).m_ptr != rhs.m_ptr);}
             operator iterator<const value_type>() {return iterator<const value_type>(m_ptr);}//?
+            // template <class T1, class T2>
+            // friend bool    operator < (iterator<T1> const & it1, iterator<T2> const & it2)
+            // {
+            //     return it1.m_ptr < it2.m_ptr;
+            // }
     };
+    template <class it1, class it2>
+    bool operator < (iterator<it1> const & x, iterator<it2> const & y)
+        {return (*x < *y);}   
+    template <class it1, class it2>
+    bool operator <=(iterator<it1> const & x, iterator<it2> const & y)
+        {return (*x <=*y);}    
+    template <class it1, class it2>
+    bool operator > (iterator<it1> const & x, iterator<it2> const & y)
+        {return (*x > *y);}   
+    template <class it1, class it2>
+    bool operator >=(iterator<it1> const & x, iterator<it2> const & y)
+        {return (*x >= *y);}    
+
 }
 
 
 #endif
+
+
+            // template <class T1, class T2>
+            // friend bool    operator < (iterator<T1> const & it1, iterator<T2> const & it2)
+            // {
+            //     return it1.m_ptr < it2.m_ptr;
+            // }
+
+            // template <class T1, class T2>
+            // friend bool    operator  > (iterator<T1> const & it1, iterator<T2> const & it2)
+            // {
+            //     return it1.m_ptr > it2.m_ptr;
+            // }
+
+            // template <class T1, class T2>
+            // friend bool    operator<=(iterator<T1> const & it1, iterator<T2> const & it2)
+            // {
+            //     return it1.m_ptr <= it2.m_ptr;
+            // }
+
+            // template <class T1, class T2>
+            // friend bool    operator>=(iterator<T1> const & it1, iterator<T2> const & it2)
+            // {
+            //     return it1.m_ptr >= it2.m_ptr;
+            // }
+
+
+
+    //             template <class it1, class it2>
+    // bool operator < (iterator< const it1> const & x, iterator<const it2> const & y)
+    //     {return (*x < *y);}   
+    // template <class it1, class it2>
+    // bool operator <=(iterator<it1> const & x, iterator<it2> const & y)
+    //     {return (*x <=*y);}    
+    // template <class it1, class it2>
+    // bool operator > (iterator<it1> const & x, iterator<it2> const & y)
+    //     {return (*x > *y);}   
+    // template <class it1, class it2>
+    // bool operator >=(iterator<it1> const & x, iterator<it2> const & y)
+    //     {return (*x >= *y);} 
