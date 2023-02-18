@@ -18,7 +18,7 @@ namespace ft
             typedef typename iterator_traits<Iterator>::difference_type difference_type;
             typedef typename iterator_traits<Iterator>::reference reference;
             typedef typename iterator_traits<Iterator>::pointer pointer;
-        
+        public:
         reverse_iterator() : m_iter(NULL){}
         explicit reverse_iterator(Iterator other) : m_iter(other){}
         template <class T> 
@@ -41,7 +41,7 @@ namespace ft
         reverse_iterator& operator++(){m_iter--; return *this;}//a++
         reverse_iterator operator++(int)//++a
         {
-            reverse_iterator tmp;
+            reverse_iterator tmp = *this;
             tmp.m_iter = m_iter;
             m_iter--;
             return tmp;
@@ -83,7 +83,7 @@ namespace ft
     };
     template <class B>
     reverse_iterator<B> operator + (typename reverse_iterator<B>::difference_type x, reverse_iterator<B> const & other)
-        {return reverse_iterator<B>(x - other.base());}
+        {return reverse_iterator<B>(other.base() - x);}
     template <class B>
     reverse_iterator<B> operator - (typename reverse_iterator<B>::difference_type  x, reverse_iterator<B> const & other)
         {return reverse_iterator<B>(other.base() + x);}

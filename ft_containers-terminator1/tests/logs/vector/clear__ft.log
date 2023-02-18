@@ -1,0 +1,54 @@
+Capacity Ok (file: tests/vector/clear.cpp, line: 20)
+Size: 0 (file: tests/vector/clear.cpp, line: 20)
+
+vector content:
+
+
+Capacity Ok (file: tests/vector/clear.cpp, line: 24)
+Size: 0 (file: tests/vector/clear.cpp, line: 24)
+
+vector content:
+
+
+Capacity Ok (file: tests/vector/clear.cpp, line: 30)
+Size: 1 (file: tests/vector/clear.cpp, line: 30)
+
+vector content:
+64 
+
+Capacity Ok (file: tests/vector/clear.cpp, line: 34)
+Size: 0 (file: tests/vector/clear.cpp, line: 34)
+
+vector content:
+
+
+Capacity Ok (file: tests/vector/clear.cpp, line: 38)
+Size: 0 (file: tests/vector/clear.cpp, line: 38)
+
+vector content:
+
+
+Capacity Ok (file: tests/vector/clear.cpp, line: 44)
+Size: 64 (file: tests/vector/clear.cpp, line: 44)
+
+vector content:
+420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 420 
+
+Capacity Ok (file: tests/vector/clear.cpp, line: 48)
+Size: 0 (file: tests/vector/clear.cpp, line: 48)
+
+vector content:
+
+
+Capacity Ok (file: tests/vector/clear.cpp, line: 52)
+Size: 0 (file: tests/vector/clear.cpp, line: 52)
+
+vector content:
+
+
+========================================
+No leak detected
+========================================
+========================================
+Every objects destroyed
+========================================
