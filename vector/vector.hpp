@@ -107,19 +107,63 @@ namespace ft
                 m_capacity = 0;
             }
     };
-    // template <class T, class Alloc>
-    // bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-    // {}
-    // template <class T, class Alloc>
-    // bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-    // template <class T, class Alloc>
-    // bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-    // template <class T, class Alloc>
-    // bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-    // template <class T, class Alloc>
-    // bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-    // template <class T, class Alloc>
-    // bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+    template <class InputIterator1, class InputIterator2>
+    bool equal ( InputIterator1 first1, InputIterator1 last1, InputIterator2 first2 )
+    {
+        while (first1!=last1) {
+            if (!(*first1 == *first2))  
+                return false;
+            ++first1; ++first2;
+        }
+        return true;
+    }
+    template <class InputIterator1, class InputIterator2>
+    bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1,
+                                InputIterator2 first2, InputIterator2 last2)
+    {
+        while (first1!=last1)
+        {
+            if (first2 == last2 || *first2 < *first1) 
+                return false;
+            else if (*first1 < *first2) 
+                return true;
+            ++first1; ++first2;
+        }
+        return (first2!=last2);
+    }
+    template <class T, class Alloc>
+    bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+    {
+        if(lhs.size() != rhs.size())
+            return(false);
+        else
+            return(ft::equal(lhs.begin(),lhs.end(),rhs.begin()));
+    }
+    template <class T, class Alloc>
+    bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+    {
+        return(!(lhs == rhs));
+    }
+    template <class T, class Alloc>
+    bool operator <  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+    {
+        return(ft::lexicographical_compare(lhs.begin(),lhs.end(),rhs.begin(),rhs.end()));
+    }
+    template <class T, class Alloc>
+    bool operator >  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+    {
+        return(rhs < lhs);
+    }
+    template <class T, class Alloc>
+    bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+    {
+        	return (!(rhs < lhs));
+    }
+    template <class T, class Alloc>
+    bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+    {
+        return (!(lhs < rhs));
+    }
     template <class T, class Alloc>
     void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
     {
