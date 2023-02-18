@@ -2,6 +2,7 @@
 #define ITERATOR_HPP
 #include <iostream>
 #include "iterator_traits.hpp"
+#include <vector>
 
 namespace ft 
 {
@@ -10,7 +11,7 @@ namespace ft
     {
         
         public:
-            typedef              _Tp value_type;
+            typedef typename std::remove_cv<_Tp>::type value_type;
             typedef std::ptrdiff_t difference_type;
             typedef _Tp* pointer;
             typedef _Tp& reference;
@@ -22,6 +23,8 @@ namespace ft
             iterator(iterator const &other){*this = other;}
             iterator() : m_ptr(NULL) {}
             ~iterator(){}
+
+            iterator geter() const { return m_ptr; }
 
             iterator & operator = (iterator const & rhs)
             {
@@ -77,27 +80,25 @@ namespace ft
             {
                 return m_ptr + other.m_ptr;
             }
-
-            template <class B>
-            friend iterator operator + (difference_type x, const iterator<B>& other) //?
-            {
-                return other.m_ptr + x;
-            }
-
-            template <class B>
-            friend iterator operator - (difference_type x, const iterator<B>& other) //?
-            {
-                return other.m_ptr - x;
-            }
+            bool operator > (iterator const & rhs) const{return ((*this).m_ptr > rhs.m_ptr);}
+            bool operator < (iterator const & rhs)  const{return ((*this).m_ptr < rhs.m_ptr);}
+            bool operator >= (iterator const & rhs) const{return ((*this).m_ptr >= rhs.m_ptr);}
+            bool operator <= (iterator const & rhs) const{return ((*this).m_ptr <= rhs.m_ptr);}
             bool operator == (iterator const & rhs) const{return ((*this).m_ptr == rhs.m_ptr);}
             bool operator != (iterator const & rhs) const{return ((*this).m_ptr != rhs.m_ptr);}
             operator iterator<const value_type>() {return iterator<const value_type>(m_ptr);}//?
-            // template <class T1, class T2>
-            // friend bool    operator < (iterator<T1> const & it1, iterator<T2> const & it2)
-            // {
-            //     return it1.m_ptr < it2.m_ptr;
-            // }
     };
+     template <class B>
+     iterator<B> operator + (typename iterator<B>::difference_type x, const iterator<B>& other) //?
+    {
+        return other.geter() + x;
+    }
+
+    template <class B>
+     iterator<B> operator - (typename iterator<B>::difference_type x, const iterator<B>& other) //?
+    {
+        return other.geter() - x;
+    }
     template <class it1, class it2>
     bool operator < (iterator<it1> const & x, iterator<it2> const & y)
         {return (*x < *y);}   
@@ -109,49 +110,8 @@ namespace ft
         {return (*x > *y);}   
     template <class it1, class it2>
     bool operator >=(iterator<it1> const & x, iterator<it2> const & y)
-        {return (*x >= *y);}    
-
+        {return (*x >= *y);}
 }
 
 
 #endif
-
-
-            // template <class T1, class T2>
-            // friend bool    operator < (iterator<T1> const & it1, iterator<T2> const & it2)
-            // {
-            //     return it1.m_ptr < it2.m_ptr;
-            // }
-
-            // template <class T1, class T2>
-            // friend bool    operator  > (iterator<T1> const & it1, iterator<T2> const & it2)
-            // {
-            //     return it1.m_ptr > it2.m_ptr;
-            // }
-
-            // template <class T1, class T2>
-            // friend bool    operator<=(iterator<T1> const & it1, iterator<T2> const & it2)
-            // {
-            //     return it1.m_ptr <= it2.m_ptr;
-            // }
-
-            // template <class T1, class T2>
-            // friend bool    operator>=(iterator<T1> const & it1, iterator<T2> const & it2)
-            // {
-            //     return it1.m_ptr >= it2.m_ptr;
-            // }
-
-
-
-    //             template <class it1, class it2>
-    // bool operator < (iterator< const it1> const & x, iterator<const it2> const & y)
-    //     {return (*x < *y);}   
-    // template <class it1, class it2>
-    // bool operator <=(iterator<it1> const & x, iterator<it2> const & y)
-    //     {return (*x <=*y);}    
-    // template <class it1, class it2>
-    // bool operator > (iterator<it1> const & x, iterator<it2> const & y)
-    //     {return (*x > *y);}   
-    // template <class it1, class it2>
-    // bool operator >=(iterator<it1> const & x, iterator<it2> const & y)
-    //     {return (*x >= *y);} 
