@@ -15,7 +15,7 @@ namespace ft
         template <class T, class Alloc>
         typename vector<T, Alloc>::size_type vector<T, Alloc>::max_size() const
         {
-            if (is_same<T,char*>::value)
+            if (is_same<T,char*>::value || is_same<T,unsigned char>::value || is_same<T,char>::value)
                 return (m_alloc.max_size() / 2);
             return (m_alloc.max_size());
         }

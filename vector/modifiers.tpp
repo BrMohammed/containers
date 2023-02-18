@@ -125,7 +125,7 @@ namespace ft
         size_t index = position - iterator(m_data);
         if (m_size != 0)
         {
-            for (size_t i = index; i < m_size ; i++)
+            for (size_t i = index; i < m_size - 1 ; i++)
                 m_data[i] = m_data[i + 1];
             m_alloc.destroy(m_data + (m_size - 1));
         }
@@ -138,13 +138,14 @@ namespace ft
     {
         size_t index = first - iterator(m_data);
         size_t end = last - first;
-
+        if(end == 0)
+            return m_data;
         if (m_size != 0)
         {
-            for (size_t i = index; i < m_size; i++)
+            for (size_t i = index; i < m_size - end ; i++)
                 m_data[i] = m_data[i + (end)];
-            for (size_t i = m_size - end; i < m_size; i++)
-                m_alloc.destroy(m_data + i);
+            for (size_t i = ((m_size) - end); i < m_size ; i++)
+                m_alloc.destroy(m_data + (i));
             m_size -= end;
         }
         return m_data + index;
@@ -155,18 +156,6 @@ namespace ft
     {
         if (this != &x)
         {
-            // pointer t_data = m_data;
-            // m_data = x.m_data;
-            // x.m_data = t_data;
-            // size_t t_size = m_size;
-            // m_size = x.m_size;
-            // x.m_size = t_size;
-            // t_size = m_capacity;
-            // m_capacity = x.m_capacity;
-            // x.m_capacity = t_size;
-            // Alloc t_alloc = m_alloc;
-            // m_alloc = x.m_alloc;
-            // x.m_alloc = t_alloc;
             ft::swap(*this,x);
         }
     }

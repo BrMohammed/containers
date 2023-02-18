@@ -9,7 +9,13 @@ namespace ft
     vector<T, Alloc>::vector(const Alloc& alloc) : m_data(NULL) , m_size(0), m_capacity(0),  m_alloc(alloc) {}
 
     template <class T, class Alloc>
-    vector<T, Alloc>::vector(const vector<T,Alloc>& other){*this = other;}
+    vector<T, Alloc>::vector(const vector<T,Alloc>& other)
+    {
+        m_size = 0;
+        m_capacity = 0;
+        m_data = NULL;
+        *this = other;
+    }
 
     template <class T, class Alloc>
     vector<T, Alloc>& vector<T, Alloc>::operator=(const vector<T,Alloc>& other)
