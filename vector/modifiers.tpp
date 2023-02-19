@@ -87,21 +87,28 @@ namespace ft
                 t_capacity = (m_size + n);
             else if (m_capacity <  m_size + n && n <= m_size)
                 t_capacity = (m_size * 2);
+            
             if(m_capacity >= m_size + n)
             {
-                for(size_type i = m_size - 1 ; i > index ; i--)
+                int posetion = 0;
+                for(size_type i = m_size - 1 ; i >= index ; --i)
                 {
-                    if(n + i >= m_size)
+                    if(n + i >= m_size )
+                    {
                         m_alloc.construct(m_data + (n + i), (m_data[i]));
+                        posetion++;
+                    }
                     else
                         m_data[i + n] = m_data[i];
-                    
                 }
-                for(size_type i = index ; i < (index + n) ; i++)
+                for(size_type i = index ; i < (index + n)   ; i++)
                 {
-                    m_data[i] = val;
+                    if( posetion > 0)
+                        m_data[i] = val;
+                    else
+                        m_alloc.construct(m_data + i, val);
+                    posetion--;
                 }
-                m_size += n;
             }
             else
             {
@@ -119,8 +126,8 @@ namespace ft
                     m_alloc.deallocate(m_data,m_capacity);
                 }
                 m_data = t_data;
-                m_size += n;
             }
+            m_size += n;
             m_capacity = t_capacity;
         }
 
@@ -146,15 +153,30 @@ namespace ft
                 t_capacity = (m_size + n);
             else if (m_capacity <  m_size + n && n <= m_size)
                 t_capacity = (m_size * 2);
-            // std::cerr << " capa:    "<< m_capacity  << " s + n    " << m_size + n << std::endl;
+
             if(m_capacity >= m_size + n)
             {
-                iterator it = tmp.begin();
-                for(;it != tmp.end();it++)
+                int posetion = 0;
+                for(size_type i = m_size - 1 ; i >= index ; --i)
                 {
-                    iterator tmp1 = m_data + index;
-                    insert(tmp1,*it);
-                    index++;
+                    if(n + i >= m_size)
+                    {
+                        m_alloc.construct(m_data + (n + i), (m_data[i]));
+                        posetion++;
+                    }
+                    else
+                        m_data[i + n] = m_data[i];
+                    
+                }
+                iterator it = tmp.begin();
+                for(size_type i = index ; i < (index + n)  ; i++)
+                {
+                    if( posetion > 0)
+                        m_data[i] = *it;
+                    else
+                        m_alloc.construct(m_data + i, *it);
+                    posetion--;
+                    it++;
                 }
             }
             else
@@ -174,8 +196,8 @@ namespace ft
                     m_alloc.deallocate(m_data,m_capacity);
                 }
                 m_data = t_data;
-                m_size += n;
             }
+            m_size += n;
             m_capacity = t_capacity;
         }
         tmp.clear();
@@ -230,7 +252,6 @@ namespace ft
             Alloc t_alloc = m_alloc;
             m_alloc = x.m_alloc;
             x.m_alloc = t_alloc;
-            // ft::swap(*this,x);
         }
     }
 

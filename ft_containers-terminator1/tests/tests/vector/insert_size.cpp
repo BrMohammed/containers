@@ -39,6 +39,7 @@ void vec_test_insert_size()
         v.insert(v.begin() + 1, 1, -9);
 
         CHECK_AND_PRINT_ALL(v);
+        
 
         v.insert(v.begin() + 7, 21, 88);
 
