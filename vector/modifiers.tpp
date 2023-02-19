@@ -89,12 +89,19 @@ namespace ft
                 t_capacity = (m_size * 2);
             if(m_capacity >= m_size + n)
             {
-                for(size_t i = 0 ; i < n ; i++)
+                for(size_type i = m_size - 1 ; i > index ; i--)
                 {
-                    iterator tmp = m_data + index;
-                    insert(tmp,val);
-                    index++;
+                    if(n + i >= m_size)
+                        m_alloc.construct(m_data + (n + i), (m_data[i]));
+                    else
+                        m_data[i + n] = m_data[i];
+                    
                 }
+                for(size_type i = index ; i < (index + n) ; i++)
+                {
+                    m_data[i] = val;
+                }
+                m_size += n;
             }
             else
             {
@@ -142,7 +149,7 @@ namespace ft
             // std::cerr << " capa:    "<< m_capacity  << " s + n    " << m_size + n << std::endl;
             if(m_capacity >= m_size + n)
             {
-                 iterator it = tmp.begin();
+                iterator it = tmp.begin();
                 for(;it != tmp.end();it++)
                 {
                     iterator tmp1 = m_data + index;

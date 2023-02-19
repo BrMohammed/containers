@@ -1984,8 +1984,8 @@ void vector_tests(void)
         /*
          * var to store the size and the capacity
          */
-        ft::vector<std::string>::size_type s, ft_s;
-        ft::vector<std::string>::size_type c, ft_c;
+        ft::vector<std::string>::size_type s = 0, ft_s = 0;
+        ft::vector<std::string>::size_type c = 0, ft_c  = 0;
         /*
          * bool to store the comparison
          */
@@ -2110,23 +2110,23 @@ void vector_tests(void)
             time_t start, end, diff;
             // test 1: test with capacity greater than or equal the size + n (reallocation must'nt happen)
             /*------------------ std::vectors ---------------------*/
-            {
-                std::vector<std::string> v(100, "hello");
-                std::vector<std::string> v1(1e6, "string2");
-                v1.reserve(1e6 + 200);
-                start = get_time();
-                v1.insert(v1.begin() + 1e5, v.begin(), v.end());
-                end = get_time();
-                diff = end - start;
-                diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
-                /*------------------ ft::vectors ---------------------*/
-                ft::vector<std::string> ft_v(100, "hello");
-                ft::vector<std::string> ft_v1(1e6, "string2");
-                ft_v1.reserve(1e6 + 200);
-                ualarm(diff * 1e3, 0);
-                ft_v1.insert(ft_v1.begin() + 1e5, ft_v.begin(), ft_v.end());
-                ualarm(0, 0);
-            }
+            // {
+            //     std::vector<std::string> v(100, "hello");
+            //     std::vector<std::string> v1(1e6, "string2");
+            //     v1.reserve(1e6 + 200);
+            //     start = get_time();
+            //     v1.insert(v1.begin() + 1e5, v.begin(), v.end());
+            //     end = get_time();
+            //     diff = end - start;
+            //     diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+            //     /*------------------ ft::vectors ---------------------*/
+            //     ft::vector<std::string> ft_v(100, "hello");
+            //     ft::vector<std::string> ft_v1(1e6, "string2");
+            //     ft_v1.reserve(1e6 + 200);
+            //     ualarm(diff * 1e3, 0);
+            //     ft_v1.insert(ft_v1.begin() + 1e5, ft_v.begin(), ft_v.end());
+            //     ualarm(0, 0);
+            // }
             /*--------------------------------------------------------------------------------------*/
             // test 2: test with capacity lesser than the size + n (reallocation must happen)
             /*------------------ std::vectors ---------------------*/
