@@ -91,14 +91,20 @@ namespace ft
     {
         if(n > 0)
         {
-            if(m_capacity > 0)
-                 destroy_allocator();
-            m_data = m_alloc.allocate(n);
+            if(m_data)
+            {
+                for(size_t i = 0 ; i < m_size ; ++i)
+                    m_alloc.destroy(m_data + i);
+                m_alloc.deallocate(m_data,m_capacity);
+            }
+            m_size = n;
+            if(n > m_capacity)
+                m_capacity = n;
+            m_data = m_alloc.allocate(m_capacity);
             for(size_type i = 0;  i < n ; i++)
                 m_alloc.construct(m_data + i , val);
         }
-        m_size = n;
-        m_capacity = n;
+
     }
 
     template <class T, class Alloc>

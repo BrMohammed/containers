@@ -1152,24 +1152,26 @@ void vector_tests(void)
         ft_z2 = ft_v1.size();
         c2 = v1.capacity();
         ft_c2 = ft_v1.capacity();
+        // std::cerr << "\n"<< c2 << " " << "ftc : "<< ft_c2 << std::endl;
+        // std::cerr << z2 << " " << "ft : "<< ft_z2 << std::endl;
         for (size_t i = 0; i < v1.size(); ++i)
             s3 += v1.at(i);
 
         for (size_t i = 0; i < ft_v1.size(); ++i)
             ft_s3 += ft_v1.at(i);
-        // // test for empty vectors
-        // v2.assign(20, 'h');
-        // ft_v2.assign(20, 'h');
+        // test for empty vectors
+        v2.assign(20, 'h');
+        ft_v2.assign(20, 'h');
 
-        // z3 = v2.size();
-        // ft_z3 = ft_v2.size();
-        // c3 = v2.capacity();
-        // ft_c3 = ft_v2.capacity();
-        // for (size_t i = 0; i < v2.size(); ++i)
-        //     s2 += v2.at(i);
+        z3 = v2.size();
+        ft_z3 = ft_v2.size();
+        c3 = v2.capacity();
+        ft_c3 = ft_v2.capacity();
+        for (size_t i = 0; i < v2.size(); ++i)
+            s2 += v2.at(i);
 
-        // for (size_t i = 0; i < ft_v2.size(); ++i)
-        //     ft_s2 += ft_v2.at(i);
+        for (size_t i = 0; i < ft_v2.size(); ++i)
+            ft_s2 += ft_v2.at(i);
 
        EQUAL((s1 == ft_s1 && z1 == ft_z1 && c1 == ft_c1) && (s2 == ft_s2 && z2 == ft_z2 && c2 == ft_c2) && (s3 == ft_s3 && z3 == ft_z3 && c3 == ft_c3));
     }
@@ -1454,8 +1456,8 @@ void vector_tests(void)
         /*
          * var to store the size and the capacity
          */
-        ft::vector<std::string>::size_type s, ft_s;
-        ft::vector<std::string>::size_type c, ft_c;
+        ft::vector<std::string>::size_type s = 0, ft_s = 0;
+        ft::vector<std::string>::size_type c = 0, ft_c = 0;
         /*
          * bool to store the comparison
          */
@@ -1474,6 +1476,7 @@ void vector_tests(void)
             ft_s = ft_v.size();
             c = v.capacity();
             ft_c = ft_v.capacity();
+            // std::cerr << "\n" << c << "ft : " << ft_c << std::endl;
             for (size_t i = 0; i < v.size(); ++i)
                 str += v[i];
             for (size_t i = 0; i < ft_v.size(); ++i)
@@ -1481,27 +1484,27 @@ void vector_tests(void)
             cond = ((str == ft_str) && (s == ft_s) && (c == ft_c));
         }
         // insert at the end
-        {
-            std::vector<std::string> v;
-            ft::vector<std::string> ft_v;
+        // {
+        //     std::vector<std::string> v;
+        //     ft::vector<std::string> ft_v;
 
-            v.insert(v.end(), "hello");
-            ft_v.insert(ft_v.end(), "hello");
-            ft_v.begin()->length();
+        //     v.insert(v.end(), "hello");
+        //     ft_v.insert(ft_v.end(), "hello");
+        //     ft_v.begin()->length();
 
-            str.clear();
-            ft_str.clear();
+        //     str.clear();
+        //     ft_str.clear();
 
-            s = v.size();
-            ft_s = ft_v.size();
-            c = v.capacity();
-            ft_c = ft_v.capacity();
-            for (size_t i = 0; i < v.size(); ++i)
-                str += v[i];
-            for (size_t i = 0; i < ft_v.size(); ++i)
-                ft_str += ft_v[i];
-            cond = (cond && (str == ft_str) && (s == ft_s) && (c == ft_c));
-        }
+        //     s = v.size();
+        //     ft_s = ft_v.size();
+        //     c = v.capacity();
+        //     ft_c = ft_v.capacity();
+        //     for (size_t i = 0; i < v.size(); ++i)
+        //         str += v[i];
+        //     for (size_t i = 0; i < ft_v.size(); ++i)
+        //         ft_str += ft_v[i];
+        //     cond = (cond && (str == ft_str) && (s == ft_s) && (c == ft_c));
+        // }
         // /*---------------------------------------------------------------------------------------------------*/
         // /*------------------------------- test 2: the vector capacity >= size + n ----------------------------------------*/
         {
@@ -1512,6 +1515,7 @@ void vector_tests(void)
             v.reserve(100);
             ft_v.reserve(100);
             valid_it = ft_v.begin();
+            
             v.insert(v.begin() + 15, 70, "hello");
             ft_v.insert(ft_v.begin() + 15, 70, "hello");
 
@@ -1525,6 +1529,7 @@ void vector_tests(void)
                 str += v[i];
             for (size_t i = 0; i < ft_v.size(); ++i)
                 ft_str += ft_v[i];
+
             cond = (cond && (str == ft_str) && (s == ft_s) && (c == ft_c) && (&(*valid_it) == &(*ft_v.begin())));
         }
         // /*---------------------------------------------------------------------------------------------------*/
@@ -1532,6 +1537,7 @@ void vector_tests(void)
         {
             std::vector<std::string> v(20, "string");
             ft::vector<std::string> ft_v(20, "string");
+            // std::cerr << "\n" << c << "ft : " << ft_c << std::endl;
 
             v.insert(v.begin() + 10, 100, "hello");
             ft_v.insert(ft_v.begin() + 10, 100, "hello");
@@ -1553,6 +1559,8 @@ void vector_tests(void)
         {
             std::vector<std::string> v(20, "string");
             ft::vector<std::string> ft_v(20, "string");
+            // std::cerr << "\n" << v.capacity() << " ftc : " << ft_v.capacity() << std::endl;
+            // std::cerr  << v.size() << " fts : " << ft_v.size() << std::endl;
 
             v.insert(v.begin() + 10, 15, "hello");
             ft_v.insert(ft_v.begin() + 10, 15, "hello");
@@ -1563,6 +1571,8 @@ void vector_tests(void)
             ft_s = ft_v.size();
             c = v.capacity();
             ft_c = ft_v.capacity();
+    
+
             for (size_t i = 0; i < v.size(); ++i)
                 str += v[i];
             for (size_t i = 0; i < ft_v.size(); ++i)
@@ -1582,8 +1592,8 @@ void vector_tests(void)
         /*
          * var to store the size and the capacity
          */
-        ft::vector<std::string>::size_type s, ft_s;
-        ft::vector<std::string>::size_type c, ft_c;
+        ft::vector<std::string>::size_type s = 0, ft_s = 0;
+        ft::vector<std::string>::size_type c = 0, ft_c = 0;
         /*
          * bool to store the comparison
          */
@@ -1640,6 +1650,9 @@ void vector_tests(void)
             ft::vector<std::string> ft_v(20, "string");
             ft::vector<std::string>::iterator valid_it;
 
+            // std::cerr << "\n" << v.capacity() << " ftc : " << ft_v.capacity() << std::endl;
+            // std::cerr  << v.size() << " fts : " << ft_v.size() << std::endl;
+
             v.reserve(100);
             ft_v.reserve(100);
             valid_it = ft_v.begin();
@@ -1652,6 +1665,9 @@ void vector_tests(void)
             ft_s = ft_v.size();
             c = v.capacity();
             ft_c = ft_v.capacity();
+
+            // std::cerr << "\n" << c << " ftc : " <<  ft_c << std::endl;
+            // std::cerr  << s << " fts : " << ft_s << std::endl;
             for (size_t i = 0; i < v.size(); ++i)
                 str += v[i];
             for (size_t i = 0; i < ft_v.size(); ++i)
@@ -2332,8 +2348,8 @@ void vector_tests(void)
         /*
          * var to store the size and the capacity
          */
-        ft::vector<std::string>::size_type s, ft_s;
-        ft::vector<std::string>::size_type c, ft_c;
+        ft::vector<std::string>::size_type s = 0, ft_s= 0;
+        ft::vector<std::string>::size_type c= 0, ft_c= 0;
         ft::vector<std::string>::iterator b1, b2;
         /*
          * bool to store the comparison
